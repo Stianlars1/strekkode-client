@@ -1,0 +1,9 @@
+.barcode-container {
+  display: flex;
+  flex-direction: column;
+
+  &__modal {
+    &__barcode-modal-content {
+    }
+  }
+}

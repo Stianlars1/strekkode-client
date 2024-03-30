@@ -1,0 +1,91 @@
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: hsl(var(--background) / 0.9);
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+  overflow-y: scroll;
+  z-index: 10;
+
+  &__content {
+    .close-button {
+      position: fixed;
+      top: 2rem;
+      right: 2rem;
+      width: 33px;
+      height: 33px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: hsl(var(--black));
+      border-radius: 50%;
+      cursor: pointer;
+
+      svg {
+        color: var(--black);
+      }
+    }
+
+    .scroll-button {
+      position: fixed;
+      top: 1rem;
+      left: 50%;
+      transform: translateX(-50%);
+
+      padding: 4px 1rem;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+
+      background-color: hsl(var(--foreground));
+      color: hsl(var(--background));
+      border-radius: 1rem;
+      cursor: pointer;
+      font-weight: 500;
+
+      svg {
+        //color: var(--foreground);
+        fill: hsl(var(--background));
+        width: 24px;
+        height: 24px;
+      }
+    }
+  }
+
+  // optional prop style to be added by prop on component add
+  &__content-center {
+    align-self: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  &__content-top {
+    align-self: flex-start;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+  }
+  &__content-bottom {
+    align-self: flex-end;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    cursor: pointer;
+  }
+}
+
+@media screen and (prefers-color-scheme: dark) {
+  .modal__content {
+    box-shadow: 0 4px 8px 0 rgba(255, 255, 255, 0.05),
+      0 6px 20px 0 rgba(255, 255, 255, 0.05);
+  }
+}

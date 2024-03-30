@@ -1,0 +1,76 @@
+@charset "UTF-8";
+.input-container__form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+}
+.input-container__form__input-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 50%;
+  margin: 0 auto;
+  gap: 0.34rem;
+}
+.input-container__form__input-content__label {
+  font-size: 1.1rem;
+}
+.input-container__form__input-content__input {
+  padding: 0.475rem 0.875rem;
+  font-size: 1rem;
+  width: 100%;
+}
+.input-container__form__input-content__input-error {
+  background-color: hsl(var(--destructive));
+  color: hsl(var(--destructive-foreground));
+  border-radius: 0.5rem;
+  padding: 8px 12px;
+  margin-bottom: 0.5rem;
+}
+.input-container__form__input-content__checkbox-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+}
+.input-container__form__input-content__checkbox-container__input {
+  font-size: 1rem;
+}
+.input-container__form__input-content__checkbox-container__text {
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.input-container__form__input-content__checkbox-container__text__info {
+  position: relative;
+  overflow: visible;
+  z-index: 2;
+}
+.input-container__form__input-content__checkbox-container__text__info:hover::after {
+  content: "Samler filene dine i én enkelt pakke for raskere og enklere nedlasting.";
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 200px;
+  padding: 1rem;
+  width: -moz-fit-content;
+  width: fit-content;
+  color: red;
+  z-index: 10000;
+}
+.input-container__form__message .success {
+  color: green;
+}
+
+@media screen and (max-width: 768px) {
+  .input-container__form__input-content {
+    min-width: 70%;
+  }
+}
+@media screen and (max-width: 500px) {
+  .input-container__form__input-content {
+    min-width: 90%;
+  }
+}/*# sourceMappingURL=barcodeInput.css.map */
