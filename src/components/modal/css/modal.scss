@@ -4,12 +4,14 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: hsl(var(--background) / 0.9);
+  background-color: hsl(var(--muted) / 0.9);
   display: flex;
   justify-content: center;
-  padding: 20px;
+  padding: 40px;
   overflow-y: scroll;
   z-index: 10;
+
+  scroll-behavior: smooth;
 
   &__content {
     .close-button {
@@ -22,11 +24,12 @@
       align-items: center;
       justify-content: center;
       background-color: hsl(var(--black));
+
       border-radius: 50%;
       cursor: pointer;
 
       svg {
-        color: var(--black);
+        color: hsl(var(--white));
       }
     }
 

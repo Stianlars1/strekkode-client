@@ -34,18 +34,28 @@ export const Modal = ({
       }
     };
 
+    const handleKeyDown = (e: Event) => {
+      if ((e as KeyboardEvent).key === "Escape") {
+        onClose && onClose();
+      }
+    };
+
     const modalContent = closeButtonScrollRef.current;
     if (modalContent) {
       modalContent.addEventListener("scroll", handleScroll);
+      window.addEventListener("keydown", handleKeyDown);
 
       // Fjern event listener ved cleanup
-      return () => modalContent.removeEventListener("scroll", handleScroll);
+      return () => {
+        modalContent.removeEventListener("scroll", handleScroll);
+        window.removeEventListener("keydown", handleKeyDown);
+      };
     }
   }, []);
 
   return ReactDOM.createPortal(
     <div
-      className={"modal "}
+      className={"modal"}
       ref={closeButtonScrollRef}
       onClick={() => onClose && onClose()}
     >

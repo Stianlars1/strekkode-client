@@ -57,6 +57,8 @@ export const BarcodeInputContainer = ({
                 <Modal
                   onClose={() => setInfoModalOpen(false)}
                   position="center"
+                  className="modal-content-info"
+                  showCloseButton={true}
                 >
                   <p>
                     Samler filene dine i én enkelt pakke for raskere og enklere

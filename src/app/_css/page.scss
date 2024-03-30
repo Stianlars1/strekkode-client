@@ -1,5 +1,5 @@
 .whole-page-wrapper {
-  padding: 0 1.2rem;
+  padding: 0 1.2rem 6rem;
   max-width: var(--max-width);
   margin: 0 auto;
 
@@ -11,11 +11,11 @@
 
 @media screen and (max-width: 768px) {
   .whole-page-wrapper {
-    padding: 0 20px;
+    padding: 0 20px 6rem;
   }
 }
 @media screen and (max-width: 500px) {
   .whole-page-wrapper {
-    padding: 0 1rem;
+    padding: 0 1rem 6rem;
   }
 }
