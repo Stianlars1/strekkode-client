@@ -78,8 +78,8 @@ export const mainPageMeta: Metadata = {
   },
 
   icons: {
-    icon: [{ url: "/icon.ico" }],
-    apple: [{ url: "/apple-touch-icon.png" }],
+    icon: [{ rel: "icon", url: "/favicon.ico" }],
+    apple: [{ rel: "apple", url: "/apple-touch-icon.png" }],
   },
 
   verification: {
