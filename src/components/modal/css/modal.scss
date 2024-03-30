@@ -1,94 +1,111 @@
 .modal {
+  margin: auto;
+  max-width: 600px;
+  padding: 2rem;
+  border: 0;
+  border-radius: 0.5rem;
+  position: relative;
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: hsl(var(--muted) / 0.9);
-  display: flex;
-  justify-content: center;
-  padding: 40px;
+  box-shadow: hsl(0 0% 0% / 10%) 0 0 0.5rem 0.25rem;
+  border: 1px solid #ccc;
+  background-color: hsl(var(--muted));
+  color: hsl(var(--muted-foreground));
   overflow-y: scroll;
-  z-index: 10;
 
-  scroll-behavior: smooth;
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    color: hsl(var(--black));
+  }
 
-  &__content {
-    .close-button {
-      position: fixed;
-      top: 2rem;
-      right: 2rem;
-      width: 33px;
-      height: 33px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background-color: hsl(var(--black));
+  strong {
+    color: hsl(var(--black));
 
-      border-radius: 50%;
-      cursor: pointer;
-
-      svg {
-        color: hsl(var(--white));
-      }
-    }
-
-    .scroll-button {
-      position: fixed;
-      top: 1rem;
-      left: 50%;
-      transform: translateX(-50%);
-
-      padding: 4px 1rem;
-
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
-
-      background-color: hsl(var(--foreground));
-      color: hsl(var(--background));
-      border-radius: 1rem;
-      cursor: pointer;
-      font-weight: 500;
-
-      svg {
-        //color: var(--foreground);
-        fill: hsl(var(--background));
-        width: 24px;
-        height: 24px;
-      }
+    a {
+      color: hsl(var(--black) / 0.8);
     }
   }
 
-  // optional prop style to be added by prop on component add
-  &__content-center {
-    align-self: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
-  &__content-top {
-    align-self: flex-start;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-  }
-  &__content-bottom {
-    align-self: flex-end;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-end;
-    cursor: pointer;
+  .modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -10;
+    background-color: transparent;
   }
 }
 
+.modal::backdrop {
+  background: hsl(0 0% 0% / 50%);
+  padding: 20px;
+  overflow: hidden;
+}
+
+.scroll-button {
+  position: sticky;
+  top: 0rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: fit-content;
+
+  padding: 4px 1rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+
+  background-color: hsl(var(--foreground));
+  color: hsl(var(--background));
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-weight: 500;
+
+  svg {
+    fill: hsl(var(--background));
+    width: 24px;
+    height: 24px;
+  }
+}
+
+.close-button {
+  position: sticky;
+  width: fit-content;
+  top: 1rem;
+  right: 0;
+  left: 100%;
+  cursor: pointer;
+  svg {
+    fill: hsl(var(--foreground));
+  }
+}
+
+.no-padding {
+  padding: 0 !important;
+}
+
 @media screen and (prefers-color-scheme: dark) {
-  .modal__content {
-    box-shadow: 0 4px 8px 0 rgba(255, 255, 255, 0.05),
-      0 6px 20px 0 rgba(255, 255, 255, 0.05);
+  .modal {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      color: hsl(var(--white));
+    }
+
+    strong {
+      color: hsl(var(--white));
+
+      a {
+        color: hsl(var(--white) / 0.9);
+      }
+    }
   }
 }

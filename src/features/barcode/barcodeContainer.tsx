@@ -59,6 +59,7 @@ export const BarcodeContainer = () => {
         "strekkode"
       );
     }
+    setIsOpen(false);
   };
 
   return (
@@ -71,47 +72,45 @@ export const BarcodeContainer = () => {
         onGenerateClick={() => setIsOpen(true)}
       />
 
-      {showModal && (
-        <Modal onClose={() => setIsOpen(false)} position="center">
-          <div className="modal-content-barcode">
-            <Barcode ref={svgBarcode} value={state?.barcodeValue || ""} />
-            <div
-              style={{
-                visibility: "hidden",
-                display: "none",
-                position: "absolute",
-              }}
-            >
-              <Barcode
-                ref={svgTransparentBarcode}
-                value={state?.barcodeValue || ""}
-                background="transparent"
-              />
-              <Barcode
-                ref={svgNoTextBarcode}
-                value={state?.barcodeValue || ""}
-                displayValue={false}
-              />
-              <Barcode
-                ref={svgTransparentNoTextBarcode}
-                value={state?.barcodeValue || ""}
-                displayValue={false}
-                background="transparent"
-              />
-            </div>
-            <Button
-              variant="primary"
-              style={{
-                backgroundColor: "hsl(240 5.9% 10%)",
-                color: "hsl(0 0% 98%)",
-              }}
-              onClick={handleDownload}
-            >
-              Last ned strekkode
-            </Button>
+      <Modal isOpen={showModal} noPadding={true}>
+        <div className="modal-content-barcode">
+          <Barcode ref={svgBarcode} value={state?.barcodeValue || ""} />
+          <div
+            style={{
+              visibility: "hidden",
+              display: "none",
+              position: "absolute",
+            }}
+          >
+            <Barcode
+              ref={svgTransparentBarcode}
+              value={state?.barcodeValue || ""}
+              background="transparent"
+            />
+            <Barcode
+              ref={svgNoTextBarcode}
+              value={state?.barcodeValue || ""}
+              displayValue={false}
+            />
+            <Barcode
+              ref={svgTransparentNoTextBarcode}
+              value={state?.barcodeValue || ""}
+              displayValue={false}
+              background="transparent"
+            />
           </div>
-        </Modal>
-      )}
+          <Button
+            variant="primary"
+            style={{
+              backgroundColor: "hsl(240 5.9% 10%)",
+              color: "hsl(0 0% 98%)",
+            }}
+            onClick={handleDownload}
+          >
+            Last ned strekkode
+          </Button>
+        </div>
+      </Modal>
     </section>
   );
 };

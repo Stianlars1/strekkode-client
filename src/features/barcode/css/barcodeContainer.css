@@ -1,4 +1,23 @@
 .barcode-container {
   display: flex;
   flex-direction: column;
+}
+.barcode-container .modal .modal-content-barcode {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  border-radius: 0.5rem;
+  background-color: var(--white);
+  background-color: hsl(var(--white));
+  color: hsl(var(--black));
+  padding: 20px;
+  position: relative;
+  gap: 1.5rem;
+  width: -moz-fit-content;
+  width: fit-content;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+  border: 1px solid hsl(var(--border));
+  z-index: 1001;
+  overflow-y: scroll;
 }/*# sourceMappingURL=barcodeContainer.css.map */

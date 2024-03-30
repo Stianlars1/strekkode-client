@@ -1,38 +1,54 @@
 .modal {
+  margin: auto;
+  max-width: 600px;
+  padding: 2rem;
+  border: 0;
+  border-radius: 0.5rem;
+  position: relative;
+  position: fixed;
+  box-shadow: hsla(0, 0%, 0%, 0.1) 0 0 0.5rem 0.25rem;
+  border: 1px solid #ccc;
+  background-color: hsl(var(--muted));
+  color: hsl(var(--muted-foreground));
+  overflow-y: scroll;
+}
+.modal h1,
+.modal h2,
+.modal h3,
+.modal h4,
+.modal h5,
+.modal h6 {
+  color: hsl(var(--black));
+}
+.modal strong {
+  color: hsl(var(--black));
+}
+.modal strong a {
+  color: hsl(var(--black)/0.8);
+}
+.modal .modal-backdrop {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: hsl(var(--muted)/0.9);
-  display: flex;
-  justify-content: center;
-  padding: 40px;
-  overflow-y: scroll;
-  z-index: 10;
-  scroll-behavior: smooth;
+  z-index: -10;
+  background-color: transparent;
 }
-.modal__content .close-button {
-  position: fixed;
-  top: 2rem;
-  right: 2rem;
-  width: 33px;
-  height: 33px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: hsl(var(--black));
-  border-radius: 50%;
-  cursor: pointer;
+
+.modal::backdrop {
+  background: hsla(0, 0%, 0%, 0.5);
+  padding: 20px;
+  overflow: hidden;
 }
-.modal__content .close-button svg {
-  color: hsl(var(--white));
-}
-.modal__content .scroll-button {
-  position: fixed;
-  top: 1rem;
+
+.scroll-button {
+  position: sticky;
+  top: 0rem;
   left: 50%;
   transform: translateX(-50%);
+  width: -moz-fit-content;
+  width: fit-content;
   padding: 4px 1rem;
   display: flex;
   align-items: center;
@@ -40,40 +56,46 @@
   gap: 0.5rem;
   background-color: hsl(var(--foreground));
   color: hsl(var(--background));
-  border-radius: 1rem;
+  border-radius: 0.5rem;
   cursor: pointer;
   font-weight: 500;
 }
-.modal__content .scroll-button svg {
+.scroll-button svg {
   fill: hsl(var(--background));
   width: 24px;
   height: 24px;
 }
-.modal__content-center {
-  align-self: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-.modal__content-top {
-  align-self: flex-start;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-}
-.modal__content-bottom {
-  align-self: flex-end;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-end;
+
+.close-button {
+  position: sticky;
+  width: -moz-fit-content;
+  width: fit-content;
+  top: 1rem;
+  right: 0;
+  left: 100%;
   cursor: pointer;
+}
+.close-button svg {
+  fill: hsl(var(--foreground));
+}
+
+.no-padding {
+  padding: 0 !important;
 }
 
 @media screen and (prefers-color-scheme: dark) {
-  .modal__content {
-    box-shadow: 0 4px 8px 0 rgba(255, 255, 255, 0.05), 0 6px 20px 0 rgba(255, 255, 255, 0.05);
+  .modal h1,
+  .modal h2,
+  .modal h3,
+  .modal h4,
+  .modal h5,
+  .modal h6 {
+    color: hsl(var(--white));
+  }
+  .modal strong {
+    color: hsl(var(--white));
+  }
+  .modal strong a {
+    color: hsl(var(--white)/0.9);
   }
 }/*# sourceMappingURL=modal.css.map */

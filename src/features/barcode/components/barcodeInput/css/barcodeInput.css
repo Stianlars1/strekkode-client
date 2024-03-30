@@ -1,4 +1,3 @@
-@charset "UTF-8";
 .input-container__form {
   display: flex;
   flex-direction: column;
@@ -42,23 +41,6 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-}
-.input-container__form__input-content__checkbox-container__text__info {
-  position: relative;
-  overflow: visible;
-  z-index: 2;
-}
-.input-container__form__input-content__checkbox-container__text__info:hover::after {
-  content: "Samler filene dine i én enkelt pakke for raskere og enklere nedlasting.";
-  position: absolute;
-  right: 0;
-  top: 0;
-  width: 200px;
-  padding: 1rem;
-  width: -moz-fit-content;
-  width: fit-content;
-  color: red;
-  z-index: 10000;
 }
 .input-container__form__message .success {
   color: green;

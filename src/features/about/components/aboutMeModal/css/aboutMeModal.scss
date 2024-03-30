@@ -1,7 +1,5 @@
-.about-container {
-  max-width: 600px;
-  margin: auto;
-  overflow-y: scroll;
+.modal__content-about-us {
+  background-color: hsl(var(--muted));
 
   h2,
   h3 {

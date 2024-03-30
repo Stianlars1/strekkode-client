@@ -42,24 +42,24 @@
           align-items: center;
           gap: 0.5rem;
 
-          &__info {
-            position: relative;
-            overflow: visible;
-            z-index: 2;
-            &:hover {
-              &::after {
-                content: "Samler filene dine i én enkelt pakke for raskere og enklere nedlasting.";
-                position: absolute;
-                right: 0;
-                top: 0;
-                width: 200px;
-                padding: 1rem;
-                width: fit-content;
-                color: red;
-                z-index: 10000;
-              }
-            }
-          }
+          // &__info {
+          //   position: relative;
+          //   overflow: visible;
+          //   z-index: 2;
+          //   &:hover {
+          //     &::after {
+          //       content: "Samler filene dine i én enkelt pakke for raskere og enklere nedlasting.";
+          //       position: absolute;
+          //       right: 0;
+          //       top: 0;
+          //       width: 200px;
+          //       padding: 1rem;
+          //       width: fit-content;
+          //       color: red;
+          //       z-index: 10000;
+          //     }
+          //   }
+          // }
         }
       }
     }
