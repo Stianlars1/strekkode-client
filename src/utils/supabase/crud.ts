@@ -7,7 +7,7 @@ import {
 } from "@/types/types";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
-import { evalError } from "../actions";
+import { evalError, networkError } from "../actions";
 import { createSupabase } from "./supaConfig";
 
 export const getBarcodeInsights = async (): Promise<GetBarcodeInsights> => {
@@ -46,6 +46,7 @@ const schema = z.object({
 export const createBarcode = async (
   barcodeValue: string
 ): Promise<CreateBarcodeReturnType> => {
+  console.log("barcodeValue", barcodeValue);
   const supabase = createSupabase();
   const {
     data,
@@ -55,7 +56,14 @@ export const createBarcode = async (
   } = await supabase.rpc("create_barcode", { arg_barcode: barcodeValue });
 
   const error = evalError(supabaseError);
-  if (error) {
+  console.log("error", error);
+  if (error === networkError) {
+    return {
+      isSuccess: true,
+      barcodeValue: barcodeValue,
+      errorMessage: undefined,
+    };
+  } else if (error) {
     return {
       isSuccess: false,
       barcodeValue: barcodeValue,

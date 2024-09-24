@@ -1,6 +1,5 @@
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
-import { evalError } from "../actions";
 
 export const createSupabase = () => {
   const supabase = createServerClient(

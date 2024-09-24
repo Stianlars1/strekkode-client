@@ -116,5 +116,5 @@ export const BarcodeContainer = () => {
 };
 
 const renderModal = (state: CreateBarcodeReturnType | undefined): boolean => {
-  return !!state?.isSuccess && !!state?.barcodeValue && !state.errorMessage;
+  return !!state?.barcodeValue;
 };

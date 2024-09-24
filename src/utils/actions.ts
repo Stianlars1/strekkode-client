@@ -1,6 +1,7 @@
 export const evalError = (error: any): string | undefined => {
   if (error?.message?.includes("TypeError") || error instanceof TypeError) {
-    const message = "Network error or invalid response (VPN?)";
+    console.error("TypeError", error);
+    const message = networkError;
     return message;
   }
 
@@ -13,3 +14,5 @@ export const evalError = (error: any): string | undefined => {
     return message;
   }
 };
+
+export const networkError = "Network error or invalid response (VPN?)";
