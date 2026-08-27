@@ -11,7 +11,7 @@ GSC-kontekst: +60 % klikk siste 28 dager, kun forsiden indeksert, «strekkode» 
 - [x] Fase 3 — Motion & tilgjengelighet (commit a46be75)
 - [x] Fase 4 — Generator v2 (live preview + 13 formater) (commit ac0ad76)
 - [x] Fase 5 — SEO-innhold + JSON-LD + OG-bilde + ikoner (ac0ad76 + 8ce7618)
-- [ ] Fase 6 — P2-features (bulk, print/Avery) — gjenstår
+- [x] Fase 6 — P2-features (bulk, print/Avery) (commits 1ccb8ff, 7fcc136, 0dc8de3)
 - [x] Logo — B (wordmark) + C (S-monogram) implementert i navbar/favicon/OG
 
 Gjenstår ellers: deploy + GSC URL-inspeksjon etterpå. Ikke pushet — venter på klarsignal.
