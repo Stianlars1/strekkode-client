@@ -31,16 +31,16 @@ export const FAQ_ITEMS = [
 const FORMAT_ROWS = [
   {
     name: "CODE128",
-    desc: "Lager, logistikk og intern merking — tall og bokstaver. Gratis å bruke.",
+    desc: "Lager, logistikk og intern merking - tall og bokstaver. Gratis å bruke.",
   },
   {
     name: "EAN-13",
     desc: "Varer som selges i butikk. Krever GS1-nummer fra GS1 Norway.",
   },
   { name: "EAN-8", desc: "Små produkter med liten emballasje." },
-  { name: "ISBN", desc: "Bøker — konverteres automatisk til EAN-13 her." },
+  { name: "ISBN", desc: "Bøker - konverteres automatisk til EAN-13 her." },
   { name: "ITF-14", desc: "D-pak og kartonger i logistikk." },
-  { name: "QR-kode", desc: "Lenker og tekst — prøv søstertjenesten qr-kode.app." },
+  { name: "QR-kode", desc: "Lenker og tekst - prøv søstertjenesten qr-kode.app." },
 ];
 
 export const Guide = () => {
@@ -74,9 +74,9 @@ export const Guide = () => {
 
       <section className="guide__columns guide__columns--three">
         <section className="guide__block" aria-labelledby="guide-steg">
-          <h2 id="guide-steg">Hvordan lage strekkode — steg for steg</h2>
+          <h2 id="guide-steg">Hvordan lage strekkode - steg for steg</h2>
           <ol className="guide__steps">
-            <li>Velg strekkodetype — CODE128 passer for det meste.</li>
+            <li>Velg strekkodetype - CODE128 passer for det meste.</li>
             <li>Skriv inn verdien og se strekkoden med en gang.</li>
             <li>Last ned som PNG eller SVG, eller kopier den rett inn i dokumentet ditt.</li>
           </ol>
@@ -98,7 +98,7 @@ export const Guide = () => {
             En strekkode er en maskinlesbar fremstilling av tall eller tekst,
             bygget opp av streker og mellomrom som en skanner leser på
             brøkdelen av et sekund. De brukes overalt der ting skal
-            identifiseres raskt og uten feiltasting — i butikk, på lager og i
+            identifiseres raskt og uten feiltasting - i butikk, på lager og i
             logistikk.
           </p>
         </section>

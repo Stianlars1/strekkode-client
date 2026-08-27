@@ -1,4 +1,3 @@
-@charset "UTF-8";
 .generator {
   width: 100%;
   max-width: 960px;
@@ -238,7 +237,7 @@
   padding: 2rem;
 }
 .generator {
-  /* The "printed label": literal white in BOTH themes — a barcode must sit on
+  /* The "printed label": literal white in BOTH themes - a barcode must sit on
      white to scan. Padding on top of the barcode's own margin frames the
      symbol like a real sticker. */
 }

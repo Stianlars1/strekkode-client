@@ -79,7 +79,7 @@ export const BarcodeContainer = () => {
   const canDownload = validation.ok && !renderFailed;
 
   const registerDownload = () => {
-    // Fire-and-forget stats — never in the way of the download itself.
+    // Fire-and-forget stats - never in the way of the download itself.
     void createBarcode(validation.renderValue).catch(() => {});
     void updateBarcodeDownloadedCount(validation.renderValue).catch(() => {});
   };
@@ -175,7 +175,7 @@ export const BarcodeContainer = () => {
           )}
           {suggestion && (
             <p className="generator__hint">
-              {suggestion.message} —{" "}
+              {suggestion.message} -{" "}
               <button
                 type="button"
                 className="generator__hint-switch"
@@ -265,9 +265,9 @@ export const BarcodeContainer = () => {
                 value={scale}
                 onChange={(e) => setScale(Number(e.target.value))}
               >
-                <option value={1}>1× — skjerm</option>
-                <option value={3}>3× — standard</option>
-                <option value={6}>6× — trykk (ca. 300 DPI)</option>
+                <option value={1}>1× - skjerm</option>
+                <option value={3}>3× - standard</option>
+                <option value={6}>6× - trykk (ca. 300 DPI)</option>
               </select>
             </div>
             <div className="generator__check-row">
@@ -351,7 +351,7 @@ export const BarcodeContainer = () => {
           </div>
         )}
         <span className="generator__caption">
-          Forhåndsvisning — oppdateres mens du skriver
+          Forhåndsvisning - oppdateres mens du skriver
         </span>
       </div>
     </section>

@@ -34,7 +34,7 @@ export const FORMAT_GROUPS: FormatGroup[] = [
       {
         id: "CODE128",
         jsbFormat: "CODE128",
-        label: "CODE128 — standard",
+        label: "CODE128 - standard",
         inputMode: "text",
         help: "Tall og bokstaver. Lager, logistikk og intern merking.",
       },
@@ -74,14 +74,14 @@ export const FORMAT_GROUPS: FormatGroup[] = [
       {
         id: "EAN13",
         jsbFormat: "EAN13",
-        label: "EAN-13 — varer i butikk",
+        label: "EAN-13 - varer i butikk",
         inputMode: "numeric",
         help: "13 siffer. Krever GS1-nummer for salg i butikk.",
       },
       {
         id: "EAN8",
         jsbFormat: "EAN8",
-        label: "EAN-8 — små produkter",
+        label: "EAN-8 - små produkter",
         inputMode: "numeric",
         help: "8 siffer.",
       },
@@ -102,7 +102,7 @@ export const FORMAT_GROUPS: FormatGroup[] = [
       {
         id: "ITF14",
         jsbFormat: "ITF14",
-        label: "ITF-14 — D-pak/kartong",
+        label: "ITF-14 - D-pak/kartong",
         inputMode: "numeric",
         help: "14 siffer. Ytteremballasje.",
       },
@@ -205,7 +205,7 @@ const validateGtin = (
       return valid(value);
     }
     return invalid(
-      `Ugyldig kontrollsiffer — siste siffer skal være ${expected}.`,
+      `Ugyldig kontrollsiffer - siste siffer skal være ${expected}.`,
       {
         label: `Rett til ${expected}`,
         value: value.slice(0, payloadLen) + expected,
@@ -235,7 +235,7 @@ const validateIsbn = (raw: string): ValidationResult => {
   if (value.length === 10) {
     const expected = isbn10CheckChar(value.slice(0, 9));
     if (value[9] !== expected) {
-      return invalid(`Ugyldig ISBN-10 — siste tegn skal være ${expected}.`);
+      return invalid(`Ugyldig ISBN-10 - siste tegn skal være ${expected}.`);
     }
     const payload = "978" + value.slice(0, 9);
     const cd = gtinCheckDigit(payload);
@@ -256,7 +256,7 @@ const validateIsbn = (raw: string): ValidationResult => {
     if (Number(value[12]) === expected) {
       return valid(value);
     }
-    return invalid(`Ugyldig kontrollsiffer — siste siffer skal være ${expected}.`, {
+    return invalid(`Ugyldig kontrollsiffer - siste siffer skal være ${expected}.`, {
       label: `Rett til ${expected}`,
       value: value.slice(0, 12) + expected,
     });
@@ -276,7 +276,7 @@ export const validateForFormat = (
       // eslint-disable-next-line no-control-regex
       if (!/^[\x00-\x7F]+$/.test(value)) {
         return invalid(
-          "Ugyldig tegn for CODE128 — kun ASCII (bokstaver uten æøå, tall og vanlige tegn)."
+          "Ugyldig tegn for CODE128 - kun ASCII (bokstaver uten æøå, tall og vanlige tegn)."
         );
       }
       return valid(value);
@@ -285,7 +285,7 @@ export const validateForFormat = (
       const upper = value.toUpperCase();
       if (!/^[A-Z0-9\-.$/+% ]+$/.test(upper)) {
         return invalid(
-          "Ugyldig tegn for CODE39 — bruk A–Z, 0–9 og - . $ / + % mellomrom."
+          "Ugyldig tegn for CODE39 - bruk A–Z, 0–9 og - . $ / + % mellomrom."
         );
       }
       return upper === value
@@ -296,7 +296,7 @@ export const validateForFormat = (
       const upper = value.toUpperCase();
       if (!/^[A-Z0-9\-.$/+% ]+$/.test(upper)) {
         return invalid(
-          "Ugyldig tegn for CODE93 — bruk A–Z, 0–9 og - . $ / + % mellomrom."
+          "Ugyldig tegn for CODE93 - bruk A–Z, 0–9 og - . $ / + % mellomrom."
         );
       }
       return upper === value
@@ -307,7 +307,7 @@ export const validateForFormat = (
       const upper = value.toUpperCase();
       if (!/^[ABCD]?[0-9\-$:/.+]+[ABCD]?$/.test(upper)) {
         return invalid(
-          "Ugyldig Codabar — bruk tall og - $ : / . +, eventuelt A–D i start og slutt."
+          "Ugyldig Codabar - bruk tall og - $ : / . +, eventuelt A–D i start og slutt."
         );
       }
       return valid(upper);
@@ -365,7 +365,7 @@ export interface FormatSuggestion {
 }
 
 /* Non-blocking hint when the typed value looks like another format.
-   Never auto-switches — the user clicks to accept. */
+   Never auto-switches - the user clicks to accept. */
 export const suggestFormat = (
   rawValue: string,
   current: FormatId
@@ -386,14 +386,14 @@ export const suggestFormat = (
     if (value.length === 12) {
       return {
         formatId: "EAN13",
-        message: "12 siffer — EAN-13 uten kontrollsiffer?",
+        message: "12 siffer - EAN-13 uten kontrollsiffer?",
       };
     }
     if (value.length === 8) {
-      return { formatId: "EAN8", message: "8 siffer — EAN-8?" };
+      return { formatId: "EAN8", message: "8 siffer - EAN-8?" };
     }
     if (value.length === 14) {
-      return { formatId: "ITF14", message: "14 siffer — ITF-14 (D-pak)?" };
+      return { formatId: "ITF14", message: "14 siffer - ITF-14 (D-pak)?" };
     }
   }
   return null;

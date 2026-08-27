@@ -6,7 +6,7 @@ export const Navbar = () => {
   return (
     <header className="navbar">
       <nav className="navbar__inner" aria-label="Hovedmeny">
-        <Link href="/" className="wordmark" aria-label="Strekkode – til forsiden">
+        <Link href="/" className="wordmark" aria-label="Strekkode - til forsiden">
           <span>stre</span>
           <span className="wordmark__bars" aria-hidden="true">
             <span />

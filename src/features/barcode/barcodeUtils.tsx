@@ -19,7 +19,7 @@ const JSBARCODE_DEFAULTS = {
   textMargin: 6,
 };
 
-/* Renders a barcode into a detached SVG node — used for downloads so no
+/* Renders a barcode into a detached SVG node - used for downloads so no
    hidden React components have to stay mounted. Throws on invalid input;
    callers validate first. */
 export const renderBarcodeSvg = (

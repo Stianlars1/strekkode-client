@@ -11,7 +11,7 @@
   overflow-y: auto;
 
   /* Enter/exit: 250ms in, 150ms out, scale from center. Progressive
-     enhancement — browsers without allow-discrete keep the instant pop. */
+     enhancement - browsers without allow-discrete keep the instant pop. */
   opacity: 0;
   transform: scale(0.96);
   transition: opacity 150ms var(--ease-out-quart),
