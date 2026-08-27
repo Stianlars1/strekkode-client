@@ -1,93 +1,45 @@
 import { BASE_URL } from "@/utils/constants";
 import { Metadata } from "next";
-// title: "Strekkode generator",
-// description:
-//   "Generer og lag en gratis strekkode for din bedrift eller produkt.",
+
 export const mainPageMeta: Metadata = {
-  title: "Strekkode",
+  title: "Strekkodegenerator – lag strekkoder gratis | Strekkode",
   description:
-    "Generer og lag en gratis strekkode for din bedrift eller produkt.",
-  keywords: [
-    "Strekkode",
-    "Barcode",
-    "Strekkode generator",
-    "Barcode generator",
-    "Strekkode lag",
-    "Barcode lag",
-    "Strekkode bedrift",
-    "Barcode bedrift",
-    "Strekkode produkt",
-    "Barcode produkt",
-    "Strekkode generator",
-    "Strekkodegenerator",
-    "Lage strekkode",
-    "Generere strekkode",
-    "Gratis strekkode",
-    "Strekkode online",
-  ],
+    "Gratis strekkodegenerator: skriv inn tall eller tekst, generer strekkode (CODE128, EAN-13 m.fl.) og last ned som PNG eller SVG. Ingen registrering – lag strekkoden din nå!",
   creator: "Stian Larsen",
   publisher: "Stian Larsen",
   metadataBase: new URL(BASE_URL),
+  alternates: {
+    canonical: "/",
+  },
 
   openGraph: {
     type: "website",
     url: BASE_URL,
-    title: "Strekkode",
+    locale: "nb_NO",
+    title: "Strekkodegenerator – lag strekkoder gratis | Strekkode",
     description:
-      "Generer og lag en gratis strekkode for din bedrift eller produkt.",
+      "Gratis strekkodegenerator: generer strekkoder og last ned som PNG eller SVG. Ingen registrering.",
     images: [
       {
-        url: "https://strek-kode.no/android-chrome-512x512.png",
-        width: 512,
-        height: 512,
-        alt: "Strekkode logo",
-      },
-      {
-        url: "https://strek-kode.no/android-chrome-192x192.png",
-        width: 192,
-        height: 192,
-        alt: "Strekkode logo",
+        url: "/og.png",
+        width: 1200,
+        height: 630,
+        alt: "Strekkodegenerator – lag strekkoder gratis på strek-kode.no",
       },
     ],
     siteName: "strek-kode.no",
   },
   twitter: {
-    card: "app",
-    title: "strek-kode-no",
+    card: "summary_large_image",
+    title: "Strekkodegenerator – lag strekkoder gratis | Strekkode",
     description:
-      "Generer og lag en gratis strekkode for din bedrift eller produkt.",
-    siteId: "882276408",
+      "Gratis strekkodegenerator: generer strekkoder og last ned som PNG eller SVG. Ingen registrering.",
     creator: "@Litehode",
-    creatorId: "882276408",
-    images: {
-      url: "https://stianlarsen.com/og.png",
-      alt: "Strekkode logo",
-    },
-    app: {
-      name: "twitter_app",
-      id: {
-        iphone: "twitter_app://iphone",
-        ipad: "twitter_app://ipad",
-        googleplay: "twitter_app://googleplay",
-      },
-      url: {
-        iphone: "https://iphone_url",
-        ipad: "https://ipad_url",
-      },
-    },
+    images: ["/og.png"],
   },
 
   icons: {
     icon: [{ rel: "icon", url: "/favicon.ico" }],
     apple: [{ rel: "apple", url: "/apple-touch-icon.png" }],
-  },
-
-  verification: {
-    google: "google",
-    yandex: "yandex",
-    yahoo: "yahoo",
-    other: {
-      me: ["stian.larsen@mac.com"],
-    },
   },
 };

@@ -9,7 +9,8 @@ export const generateBarcode = async (
     return {
       isSuccess: false,
       barcodeValue: "",
-      errorMessage: "Barcode value is required",
+      errorMessage: "Du må skrive inn en verdi for strekkoden",
+      ts: Date.now(),
     };
   }
   return await createBarcode(barcode);

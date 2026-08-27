@@ -24,4 +24,6 @@ export interface CreateBarcodeReturnType {
   isSuccess: boolean;
   barcodeValue: string;
   errorMessage: string | undefined;
+  /* Per-attempt stamp so error UI can re-run its enter animation on identical messages */
+  ts?: number;
 }

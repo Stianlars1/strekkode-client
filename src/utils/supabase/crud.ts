@@ -68,6 +68,7 @@ export const createBarcode = async (
       isSuccess: false,
       barcodeValue: barcodeValue,
       errorMessage: error,
+      ts: Date.now(),
     };
   }
   // Cache invalidate to update UI in background for the total generated count insights

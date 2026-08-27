@@ -123,7 +123,7 @@ export const downloadBarcodes = async (
   );
 
   // PNG
-  downloadBlob(pngBlob, `${filenamePrefix}-transparent.png`);
+  downloadBlob(pngBlob, `${filenamePrefix}.png`);
   downloadBlob(pngTransparentBlob, `${filenamePrefix}-transparent.png`);
   downloadBlob(pngNoTextBlob, `${filenamePrefix}-no-text.png`);
   downloadBlob(

@@ -1,13 +1,16 @@
 import { BASE_URL } from "@/utils/constants";
 import { MetadataRoute } from "next";
 
-export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const staticRoutes: MetadataRoute.Sitemap = [""].map((route) => ({
-    url: `${BASE_URL}/${route}`,
-    lastModified: new Date().toISOString(),
-    priority: 1,
-    changeFrequency: "monthly",
-  }));
+// Bump manually on real content changes so lastmod stays trustworthy.
+const LAST_CONTENT_CHANGE = "2026-08-27";
 
-  return [...staticRoutes];
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  return [
+    {
+      url: `${BASE_URL}/`,
+      lastModified: LAST_CONTENT_CHANGE,
+      priority: 1,
+      changeFrequency: "monthly",
+    },
+  ];
 }
