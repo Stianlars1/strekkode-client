@@ -12,12 +12,14 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  /* Direct child only - the About dialog renders inside this nav and must
+     not inherit the menu's flex/centering */
 }
-.navbar__inner ul {
+.navbar__inner > ul {
   display: flex;
   align-items: center;
 }
-.navbar__inner ul li {
+.navbar__inner > ul > li {
   list-style-type: none;
 }
 

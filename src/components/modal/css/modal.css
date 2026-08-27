@@ -90,11 +90,10 @@
 }
 
 .close-button {
-  position: sticky;
-  width: fit-content;
-  top: 1rem;
-  right: 0;
-  left: 100%;
+  position: absolute;
+  top: 0.875rem;
+  right: 0.875rem;
+  padding: 0.25rem;
   background: transparent;
   display: flex;
   align-items: center;

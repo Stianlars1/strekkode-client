@@ -13,11 +13,13 @@
     align-items: center;
     justify-content: space-between;
 
-    ul {
+    /* Direct child only - the About dialog renders inside this nav and must
+       not inherit the menu's flex/centering */
+    > ul {
       display: flex;
       align-items: center;
 
-      li {
+      > li {
         list-style-type: none;
       }
     }

@@ -68,11 +68,11 @@ export const AboutMeModal = ({
           {LINKS.map((link) => (
             <li key={link.href}>
               <a href={link.href} target="_blank" rel="noopener noreferrer">
-                <span className="about-modal__link-label">
-                  {link.label}
-                  <FiArrowUpRight aria-hidden="true" />
+                <span className="about-modal__link-text">
+                  <span className="about-modal__link-label">{link.label}</span>
+                  <span className="about-modal__link-desc">{link.desc}</span>
                 </span>
-                <span className="about-modal__link-desc">{link.desc}</span>
+                <FiArrowUpRight aria-hidden="true" />
               </a>
             </li>
           ))}
