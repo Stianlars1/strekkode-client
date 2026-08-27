@@ -798,7 +798,7 @@ metadata.tsx:54-78 declares twitter.card: "app" with name "twitter_app" and plac
 
 **Fiks:**
 
-Replace the whole twitter block with: twitter: { card: "summary_large_image", title: <same as new title>, description: <same as new description>, creator: "@Litehode", images: ["/og.png"] }. Delete siteId/creatorId/app entirely.
+Replace the whole twitter block with: twitter: { card: "summary_large_image", title: <same as new title>, description: <same as new description>, creator: "@stianlarsen_", images: ["/og.png"] }. Delete siteId/creatorId/app entirely.
 
 ### [LOW] Verification placeholders render as literal junk meta tags
 Fil: `/Users/stian/Developer/nettsider/strekkode/strekkode-client/src/app/metadata.tsx`

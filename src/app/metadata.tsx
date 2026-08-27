@@ -34,7 +34,7 @@ export const mainPageMeta: Metadata = {
     title: "Strekkodegenerator - lag strekkoder gratis | Strekkode",
     description:
       "Gratis strekkodegenerator: generer strekkoder og last ned som PNG eller SVG. Ingen registrering.",
-    creator: "@Litehode",
+    creator: "@stianlarsen_",
     images: ["/og.png"],
   },
 
