@@ -46,7 +46,6 @@ const schema = z.object({
 export const createBarcode = async (
   barcodeValue: string
 ): Promise<CreateBarcodeReturnType> => {
-  console.log("barcodeValue", barcodeValue);
   const supabase = createSupabase();
   const {
     data,
@@ -56,7 +55,6 @@ export const createBarcode = async (
   } = await supabase.rpc("create_barcode", { arg_barcode: barcodeValue });
 
   const error = evalError(supabaseError);
-  console.log("error", error);
   if (error === networkError) {
     return {
       isSuccess: true,

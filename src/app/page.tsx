@@ -1,4 +1,5 @@
 import { Header } from "@/components/header/header";
+import { Guide } from "@/features/guide/guide";
 import { Hero } from "@/features/hero/hero";
 import "./_css/page.css";
 
@@ -7,7 +8,7 @@ export default function Home() {
     <div className="whole-page-wrapper">
       <Header />
       <Hero />
-      {/* <About /> */}
+      <Guide />
     </div>
   );
 }

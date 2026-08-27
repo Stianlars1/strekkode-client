@@ -97,8 +97,7 @@ a {
     transition-duration: 100ms;
   }
 
-  .modal[open] .modal-content-barcode > svg,
-  .modal[open] .modal-content-barcode > .button {
+  .generator__preview-card svg {
     animation: rm-fade 160ms ease-out both;
   }
 
@@ -106,14 +105,8 @@ a {
     scale: 1;
   }
 
-  .input-container__form__input-content__input-error {
+  .generator__error {
     animation: rm-fade 160ms ease-out both;
-  }
-
-  .react-tooltip,
-  .react-tooltip__show,
-  .react-tooltip__closing {
-    transform: none;
   }
 }
 

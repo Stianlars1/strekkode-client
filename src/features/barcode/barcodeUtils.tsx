@@ -1,197 +1,198 @@
 "use client";
 import { saveAs } from "file-saver";
+import JsBarcode from "jsbarcode";
 import JSZip from "jszip";
 
-export const downloadAsZip = async (
-  svgElement: SVGElement,
-  svgTransparentElement: SVGElement,
-  svgNoTextElement: SVGElement,
-  svgTransparentNoTextElement: SVGElement,
-  filenamePrefix: string
-) => {
-  const zip = new JSZip();
+export interface BarcodeOptions {
+  format: string;
+  width: number;
+  height: number;
+  displayValue: boolean;
+  margin: number;
+  background?: string;
+}
 
-  // Check if the svgElement is truly an SVGElement and not null
-  if (svgElement && svgElement instanceof SVGElement) {
-    // Serialize the SVG elements to strings
-    const svgData = new XMLSerializer().serializeToString(svgElement);
-    const svgTransparentData = new XMLSerializer().serializeToString(
-      svgTransparentElement
-    );
-    const svgNoTextData = new XMLSerializer().serializeToString(
-      svgNoTextElement
-    );
-    const svgTransparentNoTextData = new XMLSerializer().serializeToString(
-      svgTransparentNoTextElement
-    );
-
-    // Convert the SVG elements to PNG blobs
-    const pngBlob = await convertSvgToPngBlob(svgElement);
-    const pngTransparentBlob = await convertSvgToPngBlob(svgTransparentElement);
-    const pngNoTextBlob = await convertSvgToPngBlob(svgNoTextElement);
-    const pngTransparentNoTextBlob = await convertSvgToPngBlob(
-      svgTransparentNoTextElement
-    );
-
-    // ZIP the SVG images
-    zip.file(`svg/${filenamePrefix}.svg`, svgData);
-    zip.file(`svg/${filenamePrefix}-transparent.svg`, svgTransparentData);
-    zip.file(`svg/${filenamePrefix}-no-text.svg`, svgNoTextData);
-    zip.file(
-      `svg/${filenamePrefix}-transparent-no-text.svg`,
-      svgTransparentNoTextData
-    );
-
-    // ZIP the PNG images
-    zip.file(`png/${filenamePrefix}.png`, pngBlob);
-    zip.file(`png/${filenamePrefix}-transparent.png`, pngTransparentBlob);
-    zip.file(`png/${filenamePrefix}-no-text.png`, pngNoTextBlob);
-    zip.file(
-      `png/${filenamePrefix}-transparent-no-text.png`,
-      pngTransparentNoTextBlob
-    );
-  }
-
-  // Only generate the ZIP if it has contents
-  if (zip.file.length > 0) {
-    zip.generateAsync({ type: "blob" }).then(function (content) {
-      saveAs(content, `${filenamePrefix}.zip`);
-    });
-  } else {
-    console.error("No elements to add to ZIP.");
-  }
+const JSBARCODE_DEFAULTS = {
+  lineColor: "#000000",
+  font: "monospace",
+  fontSize: 16,
+  textMargin: 6,
 };
 
-const downloadBlob = (blob: Blob, filename: string) => {
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement("a");
-  link.href = url;
-  link.download = filename;
-  document.body.appendChild(link); // Required for Firefox
-  link.click();
-  document.body.removeChild(link);
-  URL.revokeObjectURL(url); // Clean up
+/* Renders a barcode into a detached SVG node — used for downloads so no
+   hidden React components have to stay mounted. Throws on invalid input;
+   callers validate first. */
+export const renderBarcodeSvg = (
+  value: string,
+  options: BarcodeOptions
+): SVGSVGElement => {
+  const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  JsBarcode(svg, value, {
+    ...JSBARCODE_DEFAULTS,
+    format: options.format,
+    width: options.width,
+    height: options.height,
+    displayValue: options.displayValue,
+    margin: options.margin,
+    background: options.background ?? "#ffffff",
+  });
+  return svg;
 };
 
-export const downloadBarcodes = async (
-  svg: SVGElement,
-  svgTransparent: SVGElement,
-  svgNoText: SVGElement,
-  svgTransparentNoText: SVGElement,
-  filenamePrefix: string
-) => {
-  if (!svg || !svgTransparent || !svgNoText || !svgTransparentNoText) return;
-  // Serialize the SVG elements to strings
-  const svgData = new XMLSerializer().serializeToString(svg);
-  const svgTransparentData = new XMLSerializer().serializeToString(
-    svgTransparent
-  );
-  const svgNoTextData = new XMLSerializer().serializeToString(svgNoText);
-  const svgTransparentNoTextData = new XMLSerializer().serializeToString(
-    svgTransparentNoText
-  );
-
-  // Create SVG blobs
-  const svgBlob = new Blob([svgData], {
-    type: "image/svg+xml;charset=utf-8",
+export const drawBarcodeInto = (
+  svg: SVGSVGElement,
+  value: string,
+  options: BarcodeOptions
+): void => {
+  JsBarcode(svg, value, {
+    ...JSBARCODE_DEFAULTS,
+    format: options.format,
+    width: options.width,
+    height: options.height,
+    displayValue: options.displayValue,
+    margin: options.margin,
+    background: options.background ?? "#ffffff",
   });
-  const svgTransparentBlob = new Blob([svgTransparentData], {
-    type: "image/svg+xml;charset=utf-8",
-  });
-  const svgNoTextBlob = new Blob([svgNoTextData], {
-    type: "image/svg+xml;charset=utf-8",
-  });
-  const svgTransparentNoTextBlob = new Blob([svgTransparentNoTextData], {
-    type: "image/svg+xml;charset=utf-8",
-  });
-
-  // Convert the SVG elements to PNG blobs
-  const pngBlob = await convertSvgToPngBlob(svg);
-  const pngTransparentBlob = await convertSvgToPngBlob(svgTransparent);
-  const pngNoTextBlob = await convertSvgToPngBlob(svgNoText);
-  const pngTransparentNoTextBlob = await convertSvgToPngBlob(
-    svgTransparentNoText
-  );
-
-  // SVG
-  downloadBlob(svgBlob, `${filenamePrefix}.svg`);
-  downloadBlob(svgTransparentBlob, `${filenamePrefix}-transparent.svg`);
-  downloadBlob(svgNoTextBlob, `${filenamePrefix}-no-text.svg`);
-  downloadBlob(
-    svgTransparentNoTextBlob,
-    `${filenamePrefix}-transparent-no-text.svg`
-  );
-
-  // PNG
-  downloadBlob(pngBlob, `${filenamePrefix}.png`);
-  downloadBlob(pngTransparentBlob, `${filenamePrefix}-transparent.png`);
-  downloadBlob(pngNoTextBlob, `${filenamePrefix}-no-text.png`);
-  downloadBlob(
-    pngTransparentNoTextBlob,
-    `${filenamePrefix}-transparent-no-text.png`
-  );
 };
+
+const svgToString = (svg: SVGSVGElement): string =>
+  new XMLSerializer().serializeToString(svg);
 
 export const convertSvgToPngBlob = async (
-  svgElement: SVGElement,
+  svgElement: SVGSVGElement,
   scale = 3
-) => {
-  if (!svgElement) throw new Error("SVG element not found");
+): Promise<Blob> => {
+  const width =
+    svgElement.width?.baseVal?.value ||
+    svgElement.getBoundingClientRect().width;
+  const height =
+    svgElement.height?.baseVal?.value ||
+    svgElement.getBoundingClientRect().height;
+  if (!width || !height) throw new Error("SVG has no dimensions");
 
-  // Clone the SVG element to avoid modifying the original
-  const clonedSvgElement = svgElement.cloneNode(true) as SVGElement;
-
-  // Attempt to read the viewBox attribute directly
-  const viewBox = clonedSvgElement.getAttribute("viewBox");
-  // Assuming the viewBox is in the format "minX minY width height"
-  const viewBoxValues = viewBox ? viewBox.split(" ") : [];
-  const originalWidth =
-    viewBoxValues.length === 4
-      ? parseFloat(viewBoxValues[2])
-      : clonedSvgElement.clientWidth ||
-        clonedSvgElement.getBoundingClientRect().width;
-  const originalHeight =
-    viewBoxValues.length === 4
-      ? parseFloat(viewBoxValues[3])
-      : clonedSvgElement.clientHeight ||
-        clonedSvgElement.getBoundingClientRect().height;
-
-  // Adjusted dimensions
-  const scaledWidth = originalWidth * scale;
-  const scaledHeight = originalHeight * scale;
-
-  // Update the clone's attributes to reflect the new size
-  clonedSvgElement.setAttribute("width", `${scaledWidth}px`);
-  clonedSvgElement.setAttribute("height", `${scaledHeight}px`);
-
-  // Serialize the modified SVG to a string
-  const svgData = new XMLSerializer().serializeToString(clonedSvgElement);
+  const svgData = svgToString(svgElement);
   const base64EncodedSvg = btoa(unescape(encodeURIComponent(svgData)));
 
   const canvas = document.createElement("canvas");
-  canvas.width = scaledWidth;
-  canvas.height = scaledHeight;
+  canvas.width = Math.round(width * scale);
+  canvas.height = Math.round(height * scale);
 
   const ctx = canvas.getContext("2d");
   if (!ctx) throw new Error("Failed to get canvas context");
 
   const img = new Image();
   img.src = `data:image/svg+xml;base64,${base64EncodedSvg}`;
-
   await new Promise((resolve, reject) => {
     img.onload = () => resolve(true);
     img.onerror = reject;
   });
 
-  ctx.drawImage(img, 0, 0, scaledWidth, scaledHeight);
+  ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
-  const format = "image/png";
-  const pngBlob = await new Promise<Blob>((resolve, reject) => {
+  return await new Promise<Blob>((resolve, reject) => {
     canvas.toBlob((blob) => {
       if (blob) resolve(blob);
       else reject(new Error("Failed to create PNG blob"));
-    }, format);
+    }, "image/png");
   });
+};
 
-  return pngBlob;
+export const sanitizeFilename = (value: string): string =>
+  value.replace(/[^a-zA-Z0-9_-]+/g, "_").slice(0, 40) || "strekkode";
+
+export interface VariantSelection {
+  transparent: boolean;
+  noText: boolean;
+}
+
+interface Variant {
+  suffix: string;
+  options: BarcodeOptions;
+}
+
+const buildVariants = (
+  base: BarcodeOptions,
+  selection: VariantSelection
+): Variant[] => {
+  const variants: Variant[] = [{ suffix: "", options: base }];
+  if (selection.transparent) {
+    variants.push({
+      suffix: "-transparent",
+      options: { ...base, background: "transparent" },
+    });
+  }
+  if (selection.noText) {
+    variants.push({
+      suffix: "-uten-tekst",
+      options: { ...base, displayValue: false },
+    });
+  }
+  if (selection.transparent && selection.noText) {
+    variants.push({
+      suffix: "-transparent-uten-tekst",
+      options: { ...base, background: "transparent", displayValue: false },
+    });
+  }
+  return variants;
+};
+
+/* One selected variant -> single file; several -> one zip. */
+export const downloadBarcode = async (
+  value: string,
+  base: BarcodeOptions,
+  kind: "png" | "svg",
+  scale: number,
+  selection: VariantSelection
+): Promise<void> => {
+  const name = sanitizeFilename(value);
+  const variants = buildVariants(base, selection);
+
+  if (variants.length === 1) {
+    const svg = renderBarcodeSvg(value, variants[0].options);
+    if (kind === "svg") {
+      const blob = new Blob([svgToString(svg)], {
+        type: "image/svg+xml;charset=utf-8",
+      });
+      saveAs(blob, `${name}.svg`);
+    } else {
+      const blob = await convertSvgToPngBlob(svg, scale);
+      saveAs(blob, `${name}.png`);
+    }
+    return;
+  }
+
+  const zip = new JSZip();
+  for (const variant of variants) {
+    const svg = renderBarcodeSvg(value, variant.options);
+    if (kind === "svg") {
+      zip.file(`${name}${variant.suffix}.svg`, svgToString(svg));
+    } else {
+      zip.file(
+        `${name}${variant.suffix}.png`,
+        await convertSvgToPngBlob(svg, scale)
+      );
+    }
+  }
+  const content = await zip.generateAsync({ type: "blob" });
+  saveAs(content, `${name}.zip`);
+};
+
+export const copyPngToClipboard = async (
+  value: string,
+  base: BarcodeOptions,
+  scale: number
+): Promise<boolean> => {
+  if (typeof ClipboardItem === "undefined" || !navigator.clipboard?.write) {
+    return false;
+  }
+  try {
+    const svg = renderBarcodeSvg(value, base);
+    const blob = await convertSvgToPngBlob(svg, scale);
+    await navigator.clipboard.write([
+      new ClipboardItem({ "image/png": blob }),
+    ]);
+    return true;
+  } catch {
+    return false;
+  }
 };
