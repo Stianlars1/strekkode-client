@@ -1,12 +1,60 @@
 .navbar {
+  width: 100%;
+  border-bottom: 1px solid hsl(var(--border));
+  display: flex;
+  justify-content: center;
+}
+.navbar__inner {
+  width: 100%;
+  max-width: var(--max-width);
+  height: 64px;
+  padding: 0 1.5rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 20px 20px 0;
-  height: 70px;
-  max-width: var(--max-width);
-  width: 100%;
 }
-.navbar ul li {
+.navbar__inner ul {
+  display: flex;
+  align-items: center;
+}
+.navbar__inner ul li {
   list-style-type: none;
-}/*# sourceMappingURL=navbar.css.map */
+}
+
+/* Wordmark: "stre" + three bars replacing the first k + "kode".
+   Bars paint with currentColor so the mark follows the theme. */
+.wordmark {
+  display: flex;
+  align-items: baseline;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: hsl(var(--foreground));
+  border-radius: 4px;
+}
+.wordmark:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px hsl(var(--ring)/0.35);
+}
+.wordmark__bars {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 1.5px;
+  height: 11.5px;
+  margin: 0 1.5px;
+}
+.wordmark__bars span {
+  height: 100%;
+  background: currentColor;
+}
+.wordmark__bars span:nth-child(1) {
+  width: 2.5px;
+}
+.wordmark__bars span:nth-child(2) {
+  width: 1.5px;
+}
+.wordmark__bars span:nth-child(3) {
+  width: 3.5px;
+}
+
+/*# sourceMappingURL=navbar.css.map */

@@ -1,7 +1,6 @@
 "use client";
 import { Button } from "@/components/ui/button/button";
 import { CreateBarcodeReturnType } from "@/types/types";
-import { useState } from "react";
 import { FaCircleInfo } from "react-icons/fa6";
 import { Tooltip } from "react-tooltip";
 import "./css/barcodeInput.css";
@@ -19,7 +18,6 @@ export const BarcodeInputContainer = ({
   dispatch: (payload: FormData) => void;
   onGenerateClick: () => void;
 }) => {
-  const [infoModalOpen, setInfoModalOpen] = useState(false);
   const showErrorMessage = Boolean(!state?.isSuccess && state?.errorMessage);
   return (
     <div className="input-container">
@@ -29,7 +27,10 @@ export const BarcodeInputContainer = ({
         key={state?.isSuccess ? "true" : "false"}
       >
         <div className="input-container__form__input-content">
-          <label className="input-container__form__input-content__label">
+          <label
+            htmlFor="barcode"
+            className="input-container__form__input-content__label"
+          >
             Skriv inn verdi for strekkode
           </label>
           <input
@@ -37,29 +38,41 @@ export const BarcodeInputContainer = ({
             id="barcode"
             name="barcode"
             placeholder="Skriv inn verdi her..."
-            aria-live="polite"
-            aria-label="Skriv inn verdi her"
+            aria-invalid={showErrorMessage || undefined}
+            aria-describedby={showErrorMessage ? "barcode-error" : undefined}
             className="input-container__form__input-content__input"
           />
-          <InputError show={showErrorMessage} message={state?.errorMessage} />
+          <InputError
+            key={state?.ts}
+            show={showErrorMessage}
+            message={state?.errorMessage}
+          />
           <div className="input-container__form__input-content__checkbox-container">
             <input
               type="checkbox"
+              id="save-as-zip"
               checked={saveAsZip}
               onChange={() => setSaveAsZip && setSaveAsZip()}
               className="input-container__form__input-content__checkbox-container__input"
             />
 
             <div className="input-container__form__input-content__checkbox-container__text">
-              <p>Samle filer for nedlasting i .zip?</p>
-              <a className="info-icon">
-                <FaCircleInfo
-                  tabIndex={0}
-                  size={16}
-                  className="input-container__form__input-content__checkbox-container__text__info"
-                />
-              </a>
-              <Tooltip anchorSelect=".info-icon" place="top">
+              <label htmlFor="save-as-zip">
+                Samle filer for nedlasting i .zip?
+              </label>
+              <button
+                type="button"
+                className="info-icon"
+                aria-label="Mer informasjon om zip-nedlasting"
+              >
+                <FaCircleInfo size={16} aria-hidden="true" />
+              </button>
+              <Tooltip
+                anchorSelect=".info-icon"
+                place="top"
+                delayShow={300}
+                opacity={1}
+              >
                 Samler filene dine i én enkelt pakke for raskere og enklere
                 nedlasting
               </Tooltip>
@@ -70,7 +83,6 @@ export const BarcodeInputContainer = ({
           variant="primary"
           className="input-container__form__button"
           type="submit"
-          aria-label="Trykk for å generere strekkode"
           onClick={() => {
             onGenerateClick && onGenerateClick();
           }}
@@ -91,13 +103,11 @@ const InputError = ({
 }) => {
   return show ? (
     <div
+      id="barcode-error"
       className="input-container__form__input-content__input-error"
       role="alert"
-      aria-live="assertive"
-      aria-label={message || "En generell error har oppstått (Sjekket VPN?)"}
-      tabIndex={0}
     >
-      <p>{message || "En generell error har oppstått (Sjekket VPN?)"}</p>
+      <p>{message || "En generell feil har oppstått"}</p>
     </div>
   ) : null;
 };

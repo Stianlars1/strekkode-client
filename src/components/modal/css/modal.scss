@@ -2,32 +2,21 @@
   margin: auto;
   max-width: 600px;
   padding: 2rem;
-  border: 0;
-  border-radius: 0.5rem;
-  position: relative;
   position: fixed;
-  box-shadow: hsl(0 0% 0% / 10%) 0 0 0.5rem 0.25rem;
-  border: 1px solid #ccc;
-  background-color: hsl(var(--muted));
-  color: hsl(var(--muted-foreground));
-  overflow-y: scroll;
+  background: hsl(var(--popover));
+  color: hsl(var(--popover-foreground));
+  border: 1px solid hsl(var(--border));
+  border-radius: 0.75rem;
+  box-shadow: 0 16px 40px -12px hsl(0 0% 0% / 0.25);
+  overflow-y: auto;
 
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    color: hsl(var(--black));
-  }
-
-  strong {
-    color: hsl(var(--black));
-
-    a {
-      color: hsl(var(--black) / 0.8);
-    }
-  }
+  /* Enter/exit: 250ms in, 150ms out, scale from center. Progressive
+     enhancement — browsers without allow-discrete keep the instant pop. */
+  opacity: 0;
+  transform: scale(0.96);
+  transition: opacity 150ms var(--ease-out-quart),
+    transform 150ms var(--ease-out-quart), overlay 150ms allow-discrete,
+    display 150ms allow-discrete;
 
   .modal-backdrop {
     position: fixed;
@@ -40,10 +29,51 @@
   }
 }
 
+.modal[open] {
+  opacity: 1;
+  transform: scale(1);
+  transition: opacity 250ms var(--ease-out-quart),
+    transform 250ms var(--ease-out-quart), overlay 250ms allow-discrete,
+    display 250ms allow-discrete;
+}
+
 .modal::backdrop {
-  background: hsl(0 0% 0% / 50%);
-  padding: 20px;
-  overflow: hidden;
+  background: hsl(0 0% 0% / 0);
+  transition: background-color 150ms ease-out, overlay 150ms allow-discrete,
+    display 150ms allow-discrete;
+}
+
+.modal[open]::backdrop {
+  background: hsl(0 0% 0% / 0.5);
+  transition-duration: 250ms;
+}
+
+@starting-style {
+  .modal[open] {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  .modal[open]::backdrop {
+    background: hsl(0 0% 0% / 0);
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .modal {
+    box-shadow: none;
+  }
+}
+
+.scroll-button,
+.close-button {
+  border: 0;
+  font: inherit;
+  cursor: pointer;
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px hsl(var(--ring) / 0.35);
+  }
 }
 
 .scroll-button {
@@ -63,7 +93,6 @@
   background-color: hsl(var(--foreground));
   color: hsl(var(--background));
   border-radius: 0.5rem;
-  cursor: pointer;
   font-weight: 500;
 
   svg {
@@ -79,7 +108,12 @@
   top: 1rem;
   right: 0;
   left: 100%;
-  cursor: pointer;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+
   svg {
     fill: hsl(var(--foreground));
   }
@@ -87,25 +121,4 @@
 
 .no-padding {
   padding: 0 !important;
-}
-
-@media screen and (prefers-color-scheme: dark) {
-  .modal {
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6 {
-      color: hsl(var(--white));
-    }
-
-    strong {
-      color: hsl(var(--white));
-
-      a {
-        color: hsl(var(--white) / 0.9);
-      }
-    }
-  }
 }

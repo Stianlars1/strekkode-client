@@ -2,21 +2,24 @@
 import { ReactNode, useEffect, useRef, useState } from "react";
 import { IoIosCloseCircle } from "react-icons/io";
 import "./css/modal.css";
+
 interface ModalProps {
   isOpen: boolean;
   hasCloseBtn?: boolean;
   onClose?: () => void;
   children: ReactNode;
   noPadding?: boolean;
+  ariaLabel?: string;
 }
+
 export const Modal = ({
   isOpen,
   hasCloseBtn,
   onClose,
   children,
   noPadding,
+  ariaLabel,
 }: ModalProps) => {
-  const [isModalOpen, setModalOpen] = useState(isOpen);
   const [showScrollButton, setShowScrollButton] = useState(false);
   const modalRef = useRef<HTMLDialogElement | null>(null);
 
@@ -24,67 +27,60 @@ export const Modal = ({
     if (onClose) {
       onClose();
     }
-    setModalOpen(false);
   };
-
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLDialogElement>) => {
-    if (event.key === "Escape") {
-      handleCloseModal();
-    }
-  };
-
-  useEffect(() => {
-    setModalOpen(isOpen);
-  }, [isOpen]);
 
   useEffect(() => {
     const modalElement = modalRef.current;
     if (!modalElement) return;
 
     const handleScroll = () => {
-      // Sjekk scroll-posisjonen til modal__content
-      const isScrolled = modalElement.scrollTop > 80;
-      if (isScrolled) {
-        setShowScrollButton(isScrolled);
-      } else {
-        setShowScrollButton(false);
-      }
+      setShowScrollButton(modalElement.scrollTop > 80);
     };
 
-    if (modalElement) {
-      if (isModalOpen) {
-        modalElement.showModal();
-      } else {
-        modalElement.close();
-      }
+    if (isOpen && !modalElement.open) {
+      modalElement.showModal();
+    } else if (!isOpen && modalElement.open) {
+      modalElement.close();
     }
-    modalElement.addEventListener("scroll", handleScroll);
 
+    modalElement.addEventListener("scroll", handleScroll);
     return () => {
       modalElement.removeEventListener("scroll", handleScroll);
     };
-  }, [isModalOpen]);
+  }, [isOpen]);
 
   return (
     <dialog
       id="modal"
       ref={modalRef}
       className={`modal ${noPadding ? "no-padding" : ""}`}
-      onKeyDown={handleKeyDown}
+      aria-label={ariaLabel}
+      onCancel={(event) => {
+        // Native Escape: let the dialog close, but keep parent state in sync
+        // so the next open works (the old desync bug).
+        event.preventDefault();
+        handleCloseModal();
+      }}
     >
-      <div
-        className="modal-backdrop" // This acts as the clickable backdrop
-        onClick={handleCloseModal} // Close the modal if this backdrop is clicked
-      />
+      <div className="modal-backdrop" onClick={handleCloseModal} />
       {showScrollButton && (
-        <div className="scroll-button" onClick={() => onClose && onClose()}>
-          <IoIosCloseCircle size={24} /> Lukk
-        </div>
+        <button
+          type="button"
+          className="scroll-button"
+          onClick={handleCloseModal}
+        >
+          <IoIosCloseCircle size={24} aria-hidden="true" /> Lukk
+        </button>
       )}
       {hasCloseBtn && !showScrollButton && (
-        <div className="close-button">
-          <IoIosCloseCircle size={32} onClick={() => onClose && onClose()} />
-        </div>
+        <button
+          type="button"
+          className="close-button"
+          aria-label="Lukk"
+          onClick={handleCloseModal}
+        >
+          <IoIosCloseCircle size={32} aria-hidden="true" />
+        </button>
       )}
       {children}
     </dialog>

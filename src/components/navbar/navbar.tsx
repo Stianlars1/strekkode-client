@@ -1,24 +1,26 @@
 import { About } from "@/features/about/about";
-import Image from "next/image";
 import Link from "next/link";
 import "./css/navbar.css";
 
 export const Navbar = () => {
   return (
-    <div className="navbar">
-      <Link href={"#"}>
-        <Image
-          src={"/strekkode.png"}
-          alt="The logo for strekkode"
-          width={50}
-          height={50}
-        />
-      </Link>
-      <ul>
-        <li>
-          <About />
-        </li>
-      </ul>
-    </div>
+    <header className="navbar">
+      <nav className="navbar__inner" aria-label="Hovedmeny">
+        <Link href="/" className="wordmark" aria-label="Strekkode – til forsiden">
+          <span>stre</span>
+          <span className="wordmark__bars" aria-hidden="true">
+            <span />
+            <span />
+            <span />
+          </span>
+          <span>kode</span>
+        </Link>
+        <ul>
+          <li>
+            <About />
+          </li>
+        </ul>
+      </nav>
+    </header>
   );
 };

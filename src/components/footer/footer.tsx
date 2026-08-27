@@ -13,13 +13,13 @@ export const Footer = () => {
             href="https://stianlarsen.com"
             target="_blank"
             rel="noopener noreferrer"
-            aria-label="Visit Stian Larsen's personal portfolio website"
+            aria-label="Nettsiden til Stian Larsen"
           >
             <Image
               src={"/stian-bitmoji.png"}
               width={24}
               height={24}
-              alt="Bitmoji of stian larsen"
+              alt="Tegnet portrett av Stian Larsen"
             />
             <span>Stian Larsen</span>
           </a>
@@ -27,7 +27,7 @@ export const Footer = () => {
             href="https://github.com/stianlars1"
             target="_blank"
             rel="noopener noreferrer"
-            aria-label="Visit Stian Larsen's GitHub profile"
+            aria-label="GitHub-profilen til Stian Larsen"
           >
             <FaGithub />
             <span>/stianlars1</span>
@@ -36,7 +36,7 @@ export const Footer = () => {
             href="https://instagram.com/stianlarsen"
             target="_blank"
             rel="noopener noreferrer"
-            aria-label="Visit Stian Larsen's Instagram profile"
+            aria-label="Instagram-profilen til Stian Larsen"
           >
             <FaInstagram />
             <span>stianlarsen</span>
@@ -45,7 +45,7 @@ export const Footer = () => {
             href="mailto:stian.larsen@mac.com"
             target="_blank"
             rel="noopener noreferrer"
-            aria-label="Send an email to Stian Larsen"
+            aria-label="Send e-post til Stian Larsen"
           >
             <FaEnvelope />
             <span>stian.larsen@mac.com</span>

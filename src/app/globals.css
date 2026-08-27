@@ -4,51 +4,56 @@
   --border-radius: 12px;
   --radius: 0.5rem;
   --white: 0 0% 100%;
-  --black: 240 10% 3.9%;
+  --black: 0 0% 3.9%;
+  --ease-out-quart: cubic-bezier(0.22, 1, 0.36, 1);
 
-  /* == Theme == */
+  /* == Theme (monochrome — hue 0, 0% saturation) == */
   --background: 0 0% 100%;
-  --foreground: 240 10% 3.9%;
+  --foreground: 0 0% 9%;
   --card: 0 0% 100%;
-  --card-foreground: 240 10% 3.9%;
+  --card-foreground: 0 0% 9%;
   --popover: 0 0% 100%;
-  --popover-foreground: 240 10% 3.9%;
-  --primary: 240 5.9% 10%;
+  --popover-foreground: 0 0% 9%;
+  --primary: 0 0% 9%;
   --primary-foreground: 0 0% 98%;
-  --secondary: 240 4.8% 95.9%;
-  --secondary-foreground: 240 5.9% 10%;
-  --muted: 240 4.8% 95.9%;
-  --muted-foreground: 240 3.8% 46.1%;
-  --accent: 240 4.8% 95.9%;
-  --accent-foreground: 240 5.9% 10%;
-  --destructive: 0 72.22% 50.59%;
+  --secondary: 0 0% 96.1%;
+  --secondary-foreground: 0 0% 9%;
+  --muted: 0 0% 96.1%;
+  --muted-foreground: 0 0% 40%;
+  --accent: 0 0% 96.1%;
+  --accent-foreground: 0 0% 9%;
+  --destructive: 0 72.2% 42%;
   --destructive-foreground: 0 0% 98%;
-  --border: 240 5.9% 90%;
-  --input: 240 5.9% 90%;
-  --ring: 240 5% 64.9%;
+  --border: 0 0% 89.8%;
+  --input: 0 0% 89.8%;
+  --ring: 0 0% 9%;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: 240 10% 3.9%;
+    --background: 0 0% 3.9%;
     --foreground: 0 0% 98%;
-    --card: 240 10% 3.9%;
+    --card: 0 0% 7%;
     --card-foreground: 0 0% 98%;
-    --popover: 240 10% 3.9%;
+    --popover: 0 0% 7%;
     --popover-foreground: 0 0% 98%;
     --primary: 0 0% 98%;
-    --primary-foreground: 240 5.9% 10%;
-    --secondary: 240 3.7% 15.9%;
+    --primary-foreground: 0 0% 9%;
+    --secondary: 0 0% 14.9%;
     --secondary-foreground: 0 0% 98%;
-    --muted: 240 3.7% 15.9%;
-    --muted-foreground: 240 5% 64.9%;
-    --accent: 240 3.7% 15.9%;
+    --muted: 0 0% 14.9%;
+    --muted-foreground: 0 0% 65%;
+    --accent: 0 0% 14.9%;
     --accent-foreground: 0 0% 98%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 85.7% 97.3%;
-    --border: 240 3.7% 15.9%;
-    --input: 240 3.7% 15.9%;
-    --ring: 240 4.9% 83.9%;
+    --border: 0 0% 16.5%;
+    --input: 0 0% 16.5%;
+    --ring: 0 0% 83.1%;
+  }
+
+  html {
+    color-scheme: dark;
   }
 }
 
@@ -61,7 +66,7 @@
 html,
 body {
   max-width: 100vw;
-  height: 100dvh;
+  min-height: 100dvh;
   overflow-x: hidden;
 }
 
@@ -70,9 +75,8 @@ body {
   background: hsl(var(--background));
   display: flex;
   flex-direction: column;
-  align-items: center;
-  font-family: inherit, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-    Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 a {
@@ -80,21 +84,41 @@ a {
   text-decoration: none;
 }
 
-@media screen and (prefers-color-scheme: dark) {
-  .modal-content-about-us {
-    box-shadow: none;
+@media (prefers-reduced-motion: reduce) {
+  /* Fades communicate state and stay; movement goes. The loading spinner is
+     deliberately untouched — it is the only signal that work is in progress. */
+  .modal,
+  .modal[open] {
+    transform: none;
+    transition-duration: 100ms;
+  }
+  .modal::backdrop,
+  .modal[open]::backdrop {
+    transition-duration: 100ms;
+  }
+
+  .modal[open] .modal-content-barcode > svg,
+  .modal[open] .modal-content-barcode > .button {
+    animation: rm-fade 160ms ease-out both;
+  }
+
+  .button:active {
+    scale: 1;
+  }
+
+  .input-container__form__input-content__input-error {
+    animation: rm-fade 160ms ease-out both;
+  }
+
+  .react-tooltip,
+  .react-tooltip__show,
+  .react-tooltip__closing {
+    transform: none;
   }
 }
 
-@media screen and (max-width: 768px) {
-  .modal-content-about-us {
-    padding: 40px 0;
-    margin: 0;
-  }
-}
-
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
+@keyframes rm-fade {
+  from {
+    opacity: 0;
   }
 }

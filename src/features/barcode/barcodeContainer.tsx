@@ -72,9 +72,23 @@ export const BarcodeContainer = () => {
         onGenerateClick={() => setIsOpen(true)}
       />
 
-      <Modal isOpen={showModal} noPadding={true}>
+      <Modal
+        isOpen={showModal}
+        noPadding={true}
+        hasCloseBtn={true}
+        onClose={() => setIsOpen(false)}
+        ariaLabel="Din strekkode"
+      >
+        {/* Mounted only with a real value — JsBarcode throws on empty input */}
+        {state?.barcodeValue ? (
         <div className="modal-content-barcode">
-          <Barcode ref={svgBarcode} value={state?.barcodeValue || ""} />
+          <div
+            className="modal-content-barcode__label"
+            role="img"
+            aria-label={`Strekkode for verdien ${state.barcodeValue}`}
+          >
+            <Barcode ref={svgBarcode} value={state.barcodeValue} />
+          </div>
           <div
             style={{
               visibility: "hidden",
@@ -84,32 +98,26 @@ export const BarcodeContainer = () => {
           >
             <Barcode
               ref={svgTransparentBarcode}
-              value={state?.barcodeValue || ""}
+              value={state.barcodeValue}
               background="transparent"
             />
             <Barcode
               ref={svgNoTextBarcode}
-              value={state?.barcodeValue || ""}
+              value={state.barcodeValue}
               displayValue={false}
             />
             <Barcode
               ref={svgTransparentNoTextBarcode}
-              value={state?.barcodeValue || ""}
+              value={state.barcodeValue}
               displayValue={false}
               background="transparent"
             />
           </div>
-          <Button
-            variant="primary"
-            style={{
-              backgroundColor: "hsl(240 5.9% 10%)",
-              color: "hsl(0 0% 98%)",
-            }}
-            onClick={handleDownload}
-          >
+          <Button variant="primary" onClick={handleDownload}>
             Last ned strekkode
           </Button>
         </div>
+        ) : null}
       </Modal>
     </section>
   );

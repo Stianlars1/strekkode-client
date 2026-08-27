@@ -33,6 +33,30 @@ export const Button: React.FC<ButtonProps> = (props) => {
     const { href, onClick, ...linkProps } = rest as
       | LinkVariantPropsWithHref
       | LinkVariantPropsWithOnClick;
+
+    // No href means this is an action, not navigation: render a real <button>
+    // so it keeps tab order, role and Enter/Space activation.
+    if (!href && onClick) {
+      return (
+        <button
+          {...commonProps}
+          type="button"
+          onClick={
+            onClick as unknown as React.MouseEventHandler<HTMLButtonElement>
+          }
+        >
+          {loading ? (
+            <span className="isLoading">
+              <Loader />
+              {loadingText}
+            </span>
+          ) : (
+            children
+          )}
+        </button>
+      );
+    }
+
     // Prioritize onClick over href if both are provided
     const linkHandler = onClick
       ? (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {

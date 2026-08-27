@@ -2,31 +2,59 @@
   display: flex;
   flex-direction: column;
 
-  &__modal {
-    &__barcode-modal-content {
-    }
-  }
-
   .modal {
     .modal-content-barcode {
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
       align-items: center;
-      border-radius: 0.5rem;
-      background-color: var(--white);
-      background-color: hsl(var(--white));
-      color: hsl(var(--black));
-      padding: 20px;
-      position: relative;
-      gap: 1.5rem;
-      width: -moz-fit-content;
+      gap: 1.25rem;
+      padding: 1.5rem;
       width: fit-content;
-      box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1),
-        0 1px 2px -1px rgba(0, 0, 0, 0.1);
-      border: 1px solid hsl(var(--border));
-      z-index: 1001;
-      overflow-y: scroll;
+
+      /* The "printed label": literal white in BOTH themes — a barcode must sit
+         on white to scan. The inner card frames the symbol with a guaranteed
+         quiet zone (CODE128 spec: >= 10 modules). */
+      &__label {
+        background: hsl(0 0% 100%);
+        color: hsl(0 0% 9%);
+        border: 1px solid hsl(var(--border));
+        border-radius: 0.75rem;
+        padding: 1.5rem 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
     }
+  }
+}
+
+/* The reveal: bars print themselves in, left to right, once per open.
+   Keyed to [open] so the hidden dialog never animates at page load. */
+.modal[open] .modal-content-barcode svg {
+  animation: barcode-print 500ms var(--ease-out-quart) 120ms both;
+}
+
+.modal[open] .modal-content-barcode > .button {
+  animation: fade-rise 250ms var(--ease-out-quart) 380ms both;
+}
+
+@keyframes barcode-print {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes fade-rise {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }

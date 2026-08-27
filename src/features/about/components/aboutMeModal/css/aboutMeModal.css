@@ -1,6 +1,5 @@
 .modal__content-about-us {
   background-color: hsl(var(--muted));
-  /* Signatur og fotnote */
 }
 .modal__content-about-us h2,
 .modal__content-about-us h3 {
@@ -14,6 +13,9 @@
   color: #007bff;
   text-decoration: underline;
 }
+.modal__content-about-us {
+  /* Signatur og fotnote */
+}
 .modal__content-about-us .footnote {
   margin-top: 24px;
   padding-top: 24px;
@@ -22,4 +24,6 @@
 .modal__content-about-us .footnote strong {
   display: block;
   margin-bottom: 8px;
-}/*# sourceMappingURL=aboutMeModal.css.map */
+}
+
+/*# sourceMappingURL=aboutMeModal.css.map */

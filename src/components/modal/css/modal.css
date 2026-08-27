@@ -1,30 +1,20 @@
+@charset "UTF-8";
 .modal {
   margin: auto;
   max-width: 600px;
   padding: 2rem;
-  border: 0;
-  border-radius: 0.5rem;
-  position: relative;
   position: fixed;
-  box-shadow: hsla(0, 0%, 0%, 0.1) 0 0 0.5rem 0.25rem;
-  border: 1px solid #ccc;
-  background-color: hsl(var(--muted));
-  color: hsl(var(--muted-foreground));
-  overflow-y: scroll;
-}
-.modal h1,
-.modal h2,
-.modal h3,
-.modal h4,
-.modal h5,
-.modal h6 {
-  color: hsl(var(--black));
-}
-.modal strong {
-  color: hsl(var(--black));
-}
-.modal strong a {
-  color: hsl(var(--black)/0.8);
+  background: hsl(var(--popover));
+  color: hsl(var(--popover-foreground));
+  border: 1px solid hsl(var(--border));
+  border-radius: 0.75rem;
+  box-shadow: 0 16px 40px -12px hsla(0, 0%, 0%, 0.25);
+  overflow-y: auto;
+  /* Enter/exit: 250ms in, 150ms out, scale from center. Progressive
+     enhancement — browsers without allow-discrete keep the instant pop. */
+  opacity: 0;
+  transform: scale(0.96);
+  transition: opacity 150ms var(--ease-out-quart), transform 150ms var(--ease-out-quart), overlay 150ms allow-discrete, display 150ms allow-discrete;
 }
 .modal .modal-backdrop {
   position: fixed;
@@ -36,10 +26,46 @@
   background-color: transparent;
 }
 
+.modal[open] {
+  opacity: 1;
+  transform: scale(1);
+  transition: opacity 250ms var(--ease-out-quart), transform 250ms var(--ease-out-quart), overlay 250ms allow-discrete, display 250ms allow-discrete;
+}
+
 .modal::backdrop {
+  background: hsla(0, 0%, 0%, 0);
+  transition: background-color 150ms ease-out, overlay 150ms allow-discrete, display 150ms allow-discrete;
+}
+
+.modal[open]::backdrop {
   background: hsla(0, 0%, 0%, 0.5);
-  padding: 20px;
-  overflow: hidden;
+  transition-duration: 250ms;
+}
+
+@starting-style {
+  .modal[open] {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  .modal[open]::backdrop {
+    background: hsla(0, 0%, 0%, 0);
+  }
+}
+@media (prefers-color-scheme: dark) {
+  .modal {
+    box-shadow: none;
+  }
+}
+.scroll-button,
+.close-button {
+  border: 0;
+  font: inherit;
+  cursor: pointer;
+}
+.scroll-button:focus-visible,
+.close-button:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px hsl(var(--ring)/0.35);
 }
 
 .scroll-button {
@@ -47,7 +73,6 @@
   top: 0rem;
   left: 50%;
   transform: translateX(-50%);
-  width: -moz-fit-content;
   width: fit-content;
   padding: 4px 1rem;
   display: flex;
@@ -57,7 +82,6 @@
   background-color: hsl(var(--foreground));
   color: hsl(var(--background));
   border-radius: 0.5rem;
-  cursor: pointer;
   font-weight: 500;
 }
 .scroll-button svg {
@@ -68,12 +92,15 @@
 
 .close-button {
   position: sticky;
-  width: -moz-fit-content;
   width: fit-content;
   top: 1rem;
   right: 0;
   left: 100%;
-  cursor: pointer;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
 }
 .close-button svg {
   fill: hsl(var(--foreground));
@@ -83,19 +110,4 @@
   padding: 0 !important;
 }
 
-@media screen and (prefers-color-scheme: dark) {
-  .modal h1,
-  .modal h2,
-  .modal h3,
-  .modal h4,
-  .modal h5,
-  .modal h6 {
-    color: hsl(var(--white));
-  }
-  .modal strong {
-    color: hsl(var(--white));
-  }
-  .modal strong a {
-    color: hsl(var(--white)/0.9);
-  }
-}/*# sourceMappingURL=modal.css.map */
+/*# sourceMappingURL=modal.css.map */

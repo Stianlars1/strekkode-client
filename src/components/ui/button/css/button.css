@@ -1,79 +1,52 @@
-/* == hsl(Variables ( light mode )== **/
+/* Button tokens alias the global theme so buttons follow light/dark for free. */
 :root {
-  /* Button-specific hsl(variables with defaults. Users can override these if they want different styles. */
-  --button-radius: 0.5rem;
-  --button-border: 240, 5.9%, 90%;
-  --button-background: 0, 0%, 100%;
-  --button-foreground: 240, 10%, 3.9%;
-  --button-primary: 263.4 70% 50.4%;
-  --button-primary-foreground: 210 20% 98%;
-  --button-primary-hover: 262.1 83.3% 57.8% / 0.75;
-  --button-default: 240, 5.9%, 10%;
-  --button-default-foreground: 0, 0%, 98%;
-  --button-destructive: 0, 72.22%, 50.59%;
-  --button-destructive-foreground: 0, 0%, 98%;
-  --button-secondary: 240, 4.8%, 95.9%;
-  --button-secondary-foreground: 240, 5.9%, 10%;
-  --button-accent: 240, 4.8%, 95.9%;
-  --button-accent-foreground: 240, 5.9%, 10%;
+  --button-radius: var(--radius);
+  --button-border: var(--border);
+  --button-background: var(--background);
+  --button-foreground: var(--foreground);
+  --button-primary: var(--primary);
+  --button-primary-foreground: var(--primary-foreground);
+  --button-default: var(--primary);
+  --button-default-foreground: var(--primary-foreground);
+  --button-destructive: var(--destructive);
+  --button-destructive-foreground: var(--destructive-foreground);
+  --button-secondary: var(--secondary);
+  --button-secondary-foreground: var(--secondary-foreground);
+  --button-accent: var(--accent);
+  --button-accent-foreground: var(--accent-foreground);
 }
 
-/* == hsl(Variables ( dark mode )== */
-@media (prefers-color-scheme: dark) {
-  :root {
-    /* Button-specific hsl(variables with dark mode defaults */
-    --button-radius: 0.5rem;
-    --button-border: 240, 3.7%, 15.9%;
-    --button-background: 240, 10%, 3.9%;
-    --button-foreground: 0, 0%, 98%;
-    --button-primary: 263.4 70% 50.4%;
-    --button-primary-foreground: 210 20% 98%;
-    --button-primary-hover: 262.1 83.3% 57.8% / 0.75;
-    --button-default: 0, 0%, 98%;
-    --button-default-hover: 0, 0%, 98% / 0.9;
-    --button-default-foreground: 240, 5.9%, 10%;
-    --button-destructive: 0, 62.8%, 30.6%;
-    --button-destructive-foreground: 0, 85.7%, 97.3%;
-    --button-secondary: 240, 3.7%, 15.9%;
-    --button-secondary-foreground: 0, 0%, 98%;
-    --button-accent: 240, 3.7%, 15.9%;
-    --button-accent-foreground: 0, 0%, 98%;
-  }
-}
 .button {
   margin: 0;
-  padding: 0.5rem 1rem;
+  padding: 0.5625rem 1.125rem;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  transition-property: color;
   background-image: none;
   -webkit-appearance: button;
   border: 0;
   white-space: nowrap;
   font-weight: 500;
   font-size: 0.875rem;
-  line-height: 1.25rem;
+  line-height: 1.25;
+  letter-spacing: 0;
   text-transform: none;
   font-family: inherit;
   border-radius: calc(var(--button-radius) - 2px);
   color: hsl(var(--button-foreground));
-  transition: scale 0.15s ease-in-out;
-  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 0.15s;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+  transition: background-color 150ms ease, color 150ms ease, border-color 150ms ease, scale 160ms ease-out;
 }
 .button:focus-visible {
-  border-color: hsl(var(--button-border));
+  outline: none;
+  box-shadow: 0 0 0 3px hsl(var(--ring)/0.35);
 }
 .button:disabled {
   pointer-events: none;
   opacity: 0.5;
 }
 .button:active {
-  scale: 0.98;
+  scale: 0.97;
 }
 
 .button--loading .isLoading {
@@ -81,14 +54,20 @@
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
+  animation: button-fade-in 150ms ease-out;
 }
 
+@keyframes button-fade-in {
+  from {
+    opacity: 0;
+  }
+}
 .button--default {
   background-color: hsl(var(--button-default));
   color: hsl(var(--button-default-foreground));
 }
 .button--default:hover {
-  background-color: hsl(var(--button-default)/0.75);
+  background-color: hsl(var(--button-default)/0.85);
 }
 
 .button--primary {
@@ -96,40 +75,39 @@
   color: hsl(var(--button-primary-foreground));
 }
 .button--primary:hover {
-  background-color: hsl(var(--button-primary-hover)/0.9);
+  background-color: hsl(var(--button-primary)/0.85);
 }
 
 .button--destructive {
   background-color: hsl(var(--button-destructive));
   color: hsl(var(--button-destructive-foreground));
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
 }
 .button--destructive:hover {
   background-color: hsl(var(--button-destructive)/0.9);
 }
 
 .button--secondary {
-  background-color: hsl(var(--button-secondary));
-  color: hsl(var(--button-secondary-foreground));
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+  background-color: transparent;
+  color: hsl(var(--button-foreground));
+  border: 1px solid hsl(var(--button-border));
 }
 .button--secondary:hover {
-  background-color: hsl(var(--button-secondary)/0.75);
+  background-color: hsl(var(--button-accent));
 }
 
 .button--ghost {
   background-color: transparent;
   color: hsl(var(--button-accent-foreground));
-  box-shadow: none;
 }
 .button--ghost:hover {
   background-color: hsl(var(--button-accent)/0.9);
 }
 
 .button--link {
+  background-color: transparent;
   color: hsl(var(--button-foreground));
   text-underline-offset: 4px;
-  box-shadow: none;
+  padding: 0.25rem 0.5rem;
 }
 .button--link:hover {
   text-decoration: underline;
@@ -139,9 +117,10 @@
   border: 1px solid hsl(var(--button-border));
   background-color: hsl(var(--button-background));
   color: hsl(var(--button-foreground));
-  box-shadow: none;
 }
 .button--outline:hover {
   background-color: hsl(var(--button-accent));
   color: hsl(var(--button-accent-foreground));
-}/*# sourceMappingURL=button.css.map */
+}
+
+/*# sourceMappingURL=button.css.map */
