@@ -58,6 +58,9 @@ export const drawBarcodeInto = (
 const svgToString = (svg: SVGSVGElement): string =>
   new XMLSerializer().serializeToString(svg);
 
+export const svgToDataUri = (svg: SVGSVGElement): string =>
+  `data:image/svg+xml;utf8,${encodeURIComponent(svgToString(svg))}`;
+
 export const convertSvgToPngBlob = async (
   svgElement: SVGSVGElement,
   scale = 3

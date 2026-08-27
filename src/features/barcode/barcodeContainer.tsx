@@ -1,7 +1,7 @@
 "use client";
 import { createBarcode, updateBarcodeDownloadedCount } from "@/utils/supabase/crud";
 import dynamic from "next/dynamic";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { FiCheck, FiCopy } from "react-icons/fi";
 import {
   BarcodeOptions,
@@ -10,7 +10,15 @@ import {
   downloadBarcode,
   drawBarcodeInto,
   generateBulkZip,
+  renderBarcodeSvg,
+  svgToDataUri,
 } from "./barcodeUtils";
+import {
+  LabelPresetId,
+  PrintJob,
+  PrintSheet,
+  resolveLabelGrid,
+} from "./printSheet";
 import {
   FORMAT_GROUPS,
   FormatId,
@@ -59,6 +67,11 @@ export const BarcodeContainer = () => {
   const [bulkMounted, setBulkMounted] = useState(false);
   const [bulkValues, setBulkValues] = useState<string[]>([]);
   const [bulkProgress, setBulkProgress] = useState<BulkProgress | null>(null);
+  const [labelPreset, setLabelPreset] = useState<LabelPresetId>("L7160");
+  const [customCols, setCustomCols] = useState("3");
+  const [customRows, setCustomRows] = useState("8");
+  const [labelCount, setLabelCount] = useState("");
+  const [printJob, setPrintJob] = useState<PrintJob | null>(null);
 
   useEffect(() => {
     const t = setTimeout(() => setDebouncedValue(rawValue), DEBOUNCE_MS);
@@ -114,6 +127,35 @@ export const BarcodeContainer = () => {
       transparent: wantTransparent,
       noText: wantNoText,
     });
+  };
+
+  const closePrintJob = useCallback(() => setPrintJob(null), []);
+
+  const labelGrid = resolveLabelGrid(
+    labelPreset,
+    Number(customCols),
+    Number(customRows)
+  );
+  const perSheet = labelGrid.cols * labelGrid.rows;
+  const canPrint = mode === "single" ? canDownload : bulkValues.length > 0;
+
+  const handlePrint = () => {
+    let values: string[];
+    if (mode === "single") {
+      if (!canDownload) return;
+      const copies = Math.min(
+        Math.max(Math.floor(Number(labelCount)) || perSheet, 1),
+        500
+      );
+      values = Array<string>(copies).fill(validation.renderValue);
+    } else {
+      values = bulkValues;
+    }
+    if (values.length === 0) return;
+    const uris = values.map((value) =>
+      svgToDataUri(renderBarcodeSvg(value, barcodeOptions))
+    );
+    setPrintJob({ grid: labelGrid, uris });
   };
 
   const handleBulkDownload = async (kind: "png" | "svg") => {
@@ -369,6 +411,94 @@ export const BarcodeContainer = () => {
           </div>
         </details>
 
+        <details className="generator__details">
+          <summary>Skriv ut etiketter</summary>
+          <div className="generator__details-body">
+            <div className="generator__field">
+              <label htmlFor="label-preset" className="generator__label">
+                Etikettark
+              </label>
+              <select
+                id="label-preset"
+                className="generator__select"
+                value={labelPreset}
+                onChange={(e) => setLabelPreset(e.target.value as LabelPresetId)}
+              >
+                <option value="L7160">
+                  Avery L7160 - 3×7, 63.5×38.1 mm
+                </option>
+                <option value="L7651">
+                  Avery L7651 - 5×13, 38.1×21.2 mm
+                </option>
+                <option value="custom">Egendefinert rutenett</option>
+              </select>
+            </div>
+            {labelPreset === "custom" && (
+              <div className="generator__series">
+                <div className="generator__field">
+                  <label htmlFor="custom-cols" className="generator__label">
+                    Kolonner
+                  </label>
+                  <input
+                    id="custom-cols"
+                    type="number"
+                    min={1}
+                    max={8}
+                    className="generator__input"
+                    value={customCols}
+                    onChange={(e) => setCustomCols(e.target.value)}
+                  />
+                </div>
+                <div className="generator__field">
+                  <label htmlFor="custom-rows" className="generator__label">
+                    Rader
+                  </label>
+                  <input
+                    id="custom-rows"
+                    type="number"
+                    min={1}
+                    max={20}
+                    className="generator__input"
+                    value={customRows}
+                    onChange={(e) => setCustomRows(e.target.value)}
+                  />
+                </div>
+              </div>
+            )}
+            {mode === "single" && (
+              <div className="generator__field">
+                <label htmlFor="label-count" className="generator__label">
+                  Antall etiketter
+                </label>
+                <input
+                  id="label-count"
+                  type="number"
+                  min={1}
+                  max={500}
+                  className="generator__input"
+                  placeholder={`${perSheet} (fullt ark)`}
+                  value={labelCount}
+                  onChange={(e) => setLabelCount(e.target.value)}
+                />
+              </div>
+            )}
+            <p className="generator__help">
+              {mode === "bulk"
+                ? `Skriver ut alle klare strekkoder på A4-ark med ${perSheet} etiketter per ark.`
+                : "Skrives ut på A4-etikettark."}{" "}
+              Velg 100 % størrelse (ingen skalering) i utskriftsdialogen.
+            </p>
+            <button
+              type="button"
+              className="button button--secondary generator__print"
+              disabled={!canPrint}
+              onClick={handlePrint}
+            >
+              Skriv ut
+            </button>
+          </div>
+        </details>
+
         {mode === "single" ? (
           <div className="generator__actions">
             <button
@@ -463,6 +593,8 @@ export const BarcodeContainer = () => {
               : "Forhåndsvisning av første strekkode"}
         </span>
       </div>
+
+      {printJob && <PrintSheet job={printJob} onDone={closePrintJob} />}
     </section>
   );
 };
