@@ -1,12 +1,15 @@
 "use client";
 import { createBarcode, updateBarcodeDownloadedCount } from "@/utils/supabase/crud";
+import dynamic from "next/dynamic";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { FiCheck, FiCopy } from "react-icons/fi";
 import {
   BarcodeOptions,
+  BulkProgress,
   copyPngToClipboard,
   downloadBarcode,
   drawBarcodeInto,
+  generateBulkZip,
 } from "./barcodeUtils";
 import {
   FORMAT_GROUPS,
@@ -16,6 +19,15 @@ import {
   validateForFormat,
 } from "./lib/formats";
 import "./css/barcodeContainer.css";
+
+/* Bulk mode loads on first use so single mode stays light. */
+const BulkPanel = dynamic(
+  () => import("./bulkPanel").then((m) => m.BulkPanel),
+  {
+    ssr: false,
+    loading: () => <p className="generator__help">Laster inn bulk-verktøyet...</p>,
+  }
+);
 
 const DEBOUNCE_MS = 150;
 
@@ -43,15 +55,15 @@ export const BarcodeContainer = () => {
   const [wantNoText, setWantNoText] = useState(false);
   const [copied, setCopied] = useState(false);
   const [renderFailed, setRenderFailed] = useState(false);
+  const [mode, setMode] = useState<"single" | "bulk">("single");
+  const [bulkMounted, setBulkMounted] = useState(false);
+  const [bulkValues, setBulkValues] = useState<string[]>([]);
+  const [bulkProgress, setBulkProgress] = useState<BulkProgress | null>(null);
 
   useEffect(() => {
     const t = setTimeout(() => setDebouncedValue(rawValue), DEBOUNCE_MS);
     return () => clearTimeout(t);
   }, [rawValue]);
-
-  useEffect(() => {
-    setRenderFailed(false);
-  }, [debouncedValue, formatId]);
 
   const formatDef = getFormatDef(formatId);
   const validation = useMemo(
@@ -78,6 +90,17 @@ export const BarcodeContainer = () => {
   const showError = hasTyped && !validation.ok && Boolean(validation.message);
   const canDownload = validation.ok && !renderFailed;
 
+  const previewValue =
+    mode === "single"
+      ? validation.ok
+        ? validation.renderValue
+        : null
+      : bulkValues[0] ?? null;
+
+  useEffect(() => {
+    setRenderFailed(false);
+  }, [previewValue, formatId]);
+
   const registerDownload = () => {
     // Fire-and-forget stats - never in the way of the download itself.
     void createBarcode(validation.renderValue).catch(() => {});
@@ -91,6 +114,15 @@ export const BarcodeContainer = () => {
       transparent: wantTransparent,
       noText: wantNoText,
     });
+  };
+
+  const handleBulkDownload = async (kind: "png" | "svg") => {
+    if (bulkValues.length === 0 || bulkProgress) return;
+    try {
+      await generateBulkZip(bulkValues, barcodeOptions, kind, scale, setBulkProgress);
+    } finally {
+      setBulkProgress(null);
+    }
   };
 
   const handleCopy = async () => {
@@ -110,6 +142,35 @@ export const BarcodeContainer = () => {
   return (
     <section className="generator" aria-label="Strekkodegenerator">
       <div className="generator__form">
+        <fieldset className="generator__seg">
+          <legend className="generator__sr-only">Modus</legend>
+          <input
+            type="radio"
+            id="mode-single"
+            name="generator-mode"
+            className="generator__seg-input"
+            checked={mode === "single"}
+            onChange={() => setMode("single")}
+          />
+          <label htmlFor="mode-single" className="generator__seg-label">
+            Én strekkode
+          </label>
+          <input
+            type="radio"
+            id="mode-bulk"
+            name="generator-mode"
+            className="generator__seg-input"
+            checked={mode === "bulk"}
+            onChange={() => {
+              setMode("bulk");
+              setBulkMounted(true);
+            }}
+          />
+          <label htmlFor="mode-bulk" className="generator__seg-label">
+            Flere strekkoder
+          </label>
+        </fieldset>
+
         <div className="generator__field">
           <label htmlFor="format" className="generator__label">
             Format
@@ -133,6 +194,13 @@ export const BarcodeContainer = () => {
           <p className="generator__help">{formatDef.help}</p>
         </div>
 
+        {bulkMounted && (
+          <div hidden={mode !== "bulk"}>
+            <BulkPanel formatId={formatId} onValidValuesChange={setBulkValues} />
+          </div>
+        )}
+
+        {mode === "single" && (
         <div className="generator__field">
           <label htmlFor="barcode" className="generator__label">
             Verdi
@@ -186,6 +254,7 @@ export const BarcodeContainer = () => {
             </p>
           )}
         </div>
+        )}
 
         <details className="generator__details">
           <summary>Tilpass strekkoden</summary>
@@ -270,59 +339,95 @@ export const BarcodeContainer = () => {
                 <option value={6}>6× - trykk (ca. 300 DPI)</option>
               </select>
             </div>
-            <div className="generator__check-row">
-              <input
-                type="checkbox"
-                id="opt-transparent"
-                checked={wantTransparent}
-                onChange={(e) => setWantTransparent(e.target.checked)}
-              />
-              <label htmlFor="opt-transparent">
-                Også med gjennomsiktig bakgrunn
-              </label>
-            </div>
-            <div className="generator__check-row">
-              <input
-                type="checkbox"
-                id="opt-notext"
-                checked={wantNoText}
-                onChange={(e) => setWantNoText(e.target.checked)}
-              />
-              <label htmlFor="opt-notext">Også uten tekst</label>
-            </div>
-            <p className="generator__help">
-              Flere varianter samles automatisk i én .zip.
-            </p>
+            {mode === "single" && (
+              <>
+                <div className="generator__check-row">
+                  <input
+                    type="checkbox"
+                    id="opt-transparent"
+                    checked={wantTransparent}
+                    onChange={(e) => setWantTransparent(e.target.checked)}
+                  />
+                  <label htmlFor="opt-transparent">
+                    Også med gjennomsiktig bakgrunn
+                  </label>
+                </div>
+                <div className="generator__check-row">
+                  <input
+                    type="checkbox"
+                    id="opt-notext"
+                    checked={wantNoText}
+                    onChange={(e) => setWantNoText(e.target.checked)}
+                  />
+                  <label htmlFor="opt-notext">Også uten tekst</label>
+                </div>
+                <p className="generator__help">
+                  Flere varianter samles automatisk i én .zip.
+                </p>
+              </>
+            )}
           </div>
         </details>
 
-        <div className="generator__actions">
-          <button
-            type="button"
-            className="button button--primary generator__download"
-            disabled={!canDownload}
-            onClick={() => handleDownload("png")}
-          >
-            Last ned PNG
-          </button>
-          <button
-            type="button"
-            className="button button--secondary"
-            disabled={!canDownload}
-            onClick={() => handleDownload("svg")}
-          >
-            SVG
-          </button>
-          <button
-            type="button"
-            className="button button--secondary generator__copy"
-            disabled={!canDownload}
-            onClick={handleCopy}
-            aria-label={copied ? "Kopiert til utklippstavlen" : "Kopier til utklippstavlen"}
-          >
-            {copied ? <FiCheck aria-hidden="true" /> : <FiCopy aria-hidden="true" />}
-          </button>
-        </div>
+        {mode === "single" ? (
+          <div className="generator__actions">
+            <button
+              type="button"
+              className="button button--primary generator__download"
+              disabled={!canDownload}
+              onClick={() => handleDownload("png")}
+            >
+              Last ned PNG
+            </button>
+            <button
+              type="button"
+              className="button button--secondary"
+              disabled={!canDownload}
+              onClick={() => handleDownload("svg")}
+            >
+              SVG
+            </button>
+            <button
+              type="button"
+              className="button button--secondary generator__copy"
+              disabled={!canDownload}
+              onClick={handleCopy}
+              aria-label={copied ? "Kopiert til utklippstavlen" : "Kopier til utklippstavlen"}
+            >
+              {copied ? <FiCheck aria-hidden="true" /> : <FiCopy aria-hidden="true" />}
+            </button>
+          </div>
+        ) : (
+          <div className="generator__actions">
+            <button
+              type="button"
+              className="button button--primary generator__download"
+              disabled={bulkValues.length === 0 || Boolean(bulkProgress)}
+              onClick={() => handleBulkDownload("png")}
+            >
+              Last ned ZIP (PNG)
+            </button>
+            <button
+              type="button"
+              className="button button--secondary"
+              disabled={bulkValues.length === 0 || Boolean(bulkProgress)}
+              onClick={() => handleBulkDownload("svg")}
+            >
+              ZIP (SVG)
+            </button>
+          </div>
+        )}
+
+        {bulkProgress && (
+          <div className="generator__progress" role="status">
+            <progress value={bulkProgress.done} max={bulkProgress.total} />
+            <span>
+              {bulkProgress.zipping
+                ? "Pakker zip..."
+                : `Genererer ${bulkProgress.done} av ${bulkProgress.total}...`}
+            </span>
+          </div>
+        )}
 
         <p className="generator__qr-note">
           Trenger du QR-kode? Prøv søstertjenesten vår{" "}
@@ -334,10 +439,10 @@ export const BarcodeContainer = () => {
       </div>
 
       <div className="generator__preview">
-        {validation.ok && !renderFailed ? (
+        {previewValue && !renderFailed ? (
           <LivePreview
-            key={`${validation.renderValue}|${formatDef.jsbFormat}`}
-            value={validation.renderValue}
+            key={`${previewValue}|${formatDef.jsbFormat}`}
+            value={previewValue}
             options={barcodeOptions}
             onRenderResult={(ok) => setRenderFailed(!ok)}
           />
@@ -351,7 +456,11 @@ export const BarcodeContainer = () => {
           </div>
         )}
         <span className="generator__caption">
-          Forhåndsvisning - oppdateres mens du skriver
+          {mode === "single"
+            ? "Forhåndsvisning - oppdateres mens du skriver"
+            : bulkValues.length > 0
+              ? `Forhåndsvisning av første strekkode - ${bulkValues.length} klare`
+              : "Forhåndsvisning av første strekkode"}
         </span>
       </div>
     </section>

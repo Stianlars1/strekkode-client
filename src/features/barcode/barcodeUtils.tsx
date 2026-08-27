@@ -177,6 +177,48 @@ export const downloadBarcode = async (
   saveAs(content, `${name}.zip`);
 };
 
+export interface BulkProgress {
+  done: number;
+  total: number;
+  zipping: boolean;
+}
+
+/* Renders every value into one zip. Values are pre-validated render values;
+   filename collisions get -2, -3, ... suffixes. Yields to the event loop
+   between batches so the progress indicator can paint. */
+export const generateBulkZip = async (
+  values: string[],
+  base: BarcodeOptions,
+  kind: "png" | "svg",
+  scale: number,
+  onProgress: (progress: BulkProgress) => void
+): Promise<void> => {
+  const zip = new JSZip();
+  const usedNames = new Map<string, number>();
+
+  for (let i = 0; i < values.length; i++) {
+    const value = values[i];
+    const svg = renderBarcodeSvg(value, base);
+    const baseName = sanitizeFilename(value);
+    const seen = usedNames.get(baseName) ?? 0;
+    usedNames.set(baseName, seen + 1);
+    const name = seen === 0 ? baseName : `${baseName}-${seen + 1}`;
+    if (kind === "svg") {
+      zip.file(`${name}.svg`, svgToString(svg));
+    } else {
+      zip.file(`${name}.png`, await convertSvgToPngBlob(svg, scale));
+    }
+    if ((i + 1) % 10 === 0 || i === values.length - 1) {
+      onProgress({ done: i + 1, total: values.length, zipping: false });
+      await new Promise((resolve) => setTimeout(resolve, 0));
+    }
+  }
+
+  onProgress({ done: values.length, total: values.length, zipping: true });
+  const content = await zip.generateAsync({ type: "blob" });
+  saveAs(content, "strekkoder.zip");
+};
+
 export const copyPngToClipboard = async (
   value: string,
   base: BarcodeOptions,
