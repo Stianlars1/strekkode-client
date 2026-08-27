@@ -24,7 +24,7 @@ const webApplicationJsonLd = {
   description:
     "Gratis strekkodegenerator på norsk. Lag strekkoder i CODE128, EAN-13, ISBN og flere formater, og last dem ned som PNG eller SVG - uten registrering.",
   featureList:
-    "CODE128, EAN-13 med automatisk kontrollsiffer, EAN-8, UPC, ITF-14, ISBN, live forhåndsvisning, PNG- og SVG-nedlasting, transparent bakgrunn",
+    "CODE128, EAN-13 med automatisk kontrollsiffer, EAN-8, UPC, ITF-14, ISBN, live forhåndsvisning, PNG- og SVG-nedlasting, transparent bakgrunn, bulk-generering til zip, etikettutskrift for Avery-ark",
   author: {
     "@type": "Person",
     name: "Stian Larsen",

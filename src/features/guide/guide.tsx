@@ -24,7 +24,11 @@ export const FAQ_ITEMS = [
   },
   {
     q: "Hvordan skriver jeg ut strekkoder?",
-    a: "Last ned strekkoden som PNG i høy oppløsning og skriv den ut i 100 % størrelse på hvitt papir eller etiketter. Bruk gjerne en etikettskriver, og test alltid utskriften med en skanner før du tar den i bruk.",
+    a: "Last ned strekkoden som PNG i høy oppløsning og skriv den ut i 100 % størrelse på hvitt papir eller etiketter. Du kan også bruke «Skriv ut etiketter» i generatoren for å fylle et A4-etikettark direkte, med ferdige maler for Avery L7160 og L7651. Test alltid utskriften med en skanner før du tar den i bruk.",
+  },
+  {
+    q: "Kan jeg lage mange strekkoder samtidig?",
+    a: "Ja, velg «Flere strekkoder» i generatoren. Lim inn en liste med opptil 500 verdier, last opp en CSV-fil eller lag en tallserie med prefiks og startnummer. Alle strekkodene lastes ned samlet som en zip-fil, og kan skrives ut direkte på A4-etikettark.",
   },
 ];
 
@@ -100,6 +104,23 @@ export const Guide = () => {
             brøkdelen av et sekund. De brukes overalt der ting skal
             identifiseres raskt og uten feiltasting - i butikk, på lager og i
             logistikk.
+          </p>
+        </section>
+      </section>
+
+      <section
+        className="guide__columns guide__columns--single"
+        aria-labelledby="guide-bulk"
+      >
+        <section className="guide__block">
+          <h2 id="guide-bulk">Flere strekkoder og etikettutskrift</h2>
+          <p>
+            Skal du merke et helt varelager, velger du «Flere strekkoder» i
+            generatoren: lim inn en liste med opptil 500 verdier, last opp en
+            CSV-fil eller generer en tallserie, og last ned alt samlet som en
+            zip-fil. Med «Skriv ut etiketter» fyller du A4-etikettark direkte
+            fra nettleseren - med ferdige maler for Avery L7160 (3×7) og L7651
+            (5×13), eller et egendefinert rutenett.
           </p>
         </section>
       </section>

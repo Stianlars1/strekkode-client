@@ -32,6 +32,14 @@
       grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 2.5rem;
     }
+
+    &--single {
+      grid-template-columns: 1fr;
+
+      p {
+        max-width: 42rem;
+      }
+    }
   }
 
   &__table {

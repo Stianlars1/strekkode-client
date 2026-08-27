@@ -30,6 +30,12 @@
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 2.5rem;
 }
+.guide__columns--single {
+  grid-template-columns: 1fr;
+}
+.guide__columns--single p {
+  max-width: 42rem;
+}
 .guide__table {
   margin: 0;
 }
