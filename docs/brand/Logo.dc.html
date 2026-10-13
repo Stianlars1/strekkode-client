@@ -1,0 +1,83 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./vendor/react.js"></script>
+<script src="./vendor/react-dom.js"></script>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@500;600;700&family=Geist+Mono:wght@500&display=swap">
+  <style>
+    body { margin: 0; font-family: "Geist", system-ui, -apple-system, sans-serif; -webkit-font-smoothing: antialiased; }
+    a { color: #171717; } a:hover { color: #5c5c5c; }
+  </style>
+</helmet>
+<div style="width: 1100px; background: #ffffff; color: #171717; padding: 40px; display: flex; flex-direction: column; gap: 28px">
+
+  <div style="display: flex; flex-direction: column; gap: 6px">
+    <h1 style="margin: 0; font-size: 24px; font-weight: 600; letter-spacing: -0.02em">Logo — endelig identitet</h1>
+    <p style="margin: 0; font-size: 14px; color: #5c5c5c; max-width: 620px">Valgt: retning B (wordmark med strek-k) som hovedlogo, retning C (S av streker) som favicon og app-ikon. Begge i én farge — inverterer gratis med currentColor.</p>
+  </div>
+
+  <section style="display: flex; flex-direction: column; gap: 12px">
+    <h2 style="margin: 0; font-size: 13px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; color: #8a8a8a">Hovedlogo — wordmark</h2>
+    <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px">
+      <div style="border: 1px solid #e4e4e4; border-radius: 12px; height: 170px; display: flex; align-items: center; justify-content: center">
+        <div style="display: flex; align-items: baseline; font-size: 56px; font-weight: 600; letter-spacing: -0.02em">
+          <span>stre</span><div style="display: inline-flex; gap: 4px; align-items: flex-end; height: 41px; margin: 0 4px"><div style="width: 7px; height: 41px; background: #171717"></div><div style="width: 3.5px; height: 41px; background: #171717"></div><div style="width: 9.5px; height: 41px; background: #171717"></div></div><span>kode</span>
+        </div>
+      </div>
+      <div style="background: #171717; border-radius: 12px; height: 170px; display: flex; align-items: center; justify-content: center">
+        <div style="display: flex; align-items: baseline; font-size: 56px; font-weight: 600; letter-spacing: -0.02em; color: #fafafa">
+          <span>stre</span><div style="display: inline-flex; gap: 4px; align-items: flex-end; height: 41px; margin: 0 4px"><div style="width: 7px; height: 41px; background: #fafafa"></div><div style="width: 3.5px; height: 41px; background: #fafafa"></div><div style="width: 9.5px; height: 41px; background: #fafafa"></div></div><span>kode</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="display: flex; flex-direction: column; gap: 12px">
+    <h2 style="margin: 0; font-size: 13px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; color: #8a8a8a">Monogram — favicon og app-ikon</h2>
+    <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px">
+      <div style="border: 1px solid #e4e4e4; border-radius: 12px; height: 170px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px">
+        <div style="font-size: 110px; font-weight: 700; letter-spacing: -0.02em; line-height: 1; background: repeating-linear-gradient(90deg, #171717 0 6px, transparent 6px 9px, #171717 9px 11.5px, transparent 11.5px 16px, #171717 16px 23px, transparent 23px 26.5px); -webkit-background-clip: text; background-clip: text; color: transparent">S</div>
+        <span style="font-size: 11px; color: #8a8a8a">App-ikon / avatar</span>
+      </div>
+      <div style="border: 1px solid #e4e4e4; border-radius: 12px; height: 170px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px">
+        <div style="font-size: 48px; font-weight: 700; letter-spacing: -0.02em; line-height: 1; background: repeating-linear-gradient(90deg, #171717 0 5px, transparent 5px 7.5px, #171717 7.5px 13px, transparent 13px 15.5px, #171717 15.5px 22px); -webkit-background-clip: text; background-clip: text; color: transparent">S</div>
+        <span style="font-size: 11px; color: #8a8a8a">32 px — forenklet mønster</span>
+      </div>
+      <div style="border: 1px solid #e4e4e4; border-radius: 12px; height: 170px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px">
+        <div style="font-size: 20px; font-weight: 700; line-height: 1; background: repeating-linear-gradient(90deg, #171717 0 3.5px, transparent 3.5px 5.5px, #171717 5.5px 10px); -webkit-background-clip: text; background-clip: text; color: transparent">S</div>
+        <span style="font-size: 11px; color: #8a8a8a">16 px — to streker</span>
+      </div>
+      <div style="background: #171717; border-radius: 12px; height: 170px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px">
+        <div style="font-size: 64px; font-weight: 700; letter-spacing: -0.02em; line-height: 1; background: repeating-linear-gradient(90deg, #fafafa 0 5px, transparent 5px 8px, #fafafa 8px 11px, transparent 11px 15px, #fafafa 15px 20px, transparent 20px 23px); -webkit-background-clip: text; background-clip: text; color: transparent">S</div>
+        <span style="font-size: 11px; color: #8a8a8a">Invertert</span>
+      </div>
+    </div>
+  </section>
+
+  <section style="display: flex; flex-direction: column; gap: 12px">
+    <h2 style="margin: 0; font-size: 13px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; color: #8a8a8a">OG-bilde — 1200 × 630 (vist i 50 %)</h2>
+    <div style="width: 600px; height: 315px; border: 1px solid #e4e4e4; border-radius: 8px; background: #ffffff; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; position: relative; overflow: hidden">
+      <div style="display: flex; align-items: baseline; font-size: 44px; font-weight: 600; letter-spacing: -0.02em">
+        <span>stre</span><div style="display: inline-flex; gap: 3px; align-items: flex-end; height: 32px; margin: 0 3px"><div style="width: 5.5px; height: 32px; background: #171717"></div><div style="width: 3px; height: 32px; background: #171717"></div><div style="width: 7.5px; height: 32px; background: #171717"></div></div><span>kode</span>
+      </div>
+      <span style="font-size: 15px; color: #5c5c5c">Lag strekkoder gratis — strek-kode.no</span>
+      <div style="position: absolute; left: 0; right: 0; bottom: 0; height: 22px; background: repeating-linear-gradient(90deg, #171717 0 2px, transparent 2px 5px, #171717 5px 9px, transparent 9px 12px, #171717 12px 13px, transparent 13px 19px, #171717 19px 21px, transparent 21px 27px)"></div>
+    </div>
+  </section>
+
+  <section style="display: flex; flex-direction: column; gap: 8px; border-top: 1px solid #e4e4e4; padding-top: 16px">
+    <div style="display: grid; grid-template-columns: 150px 1fr; gap: 16px; font-size: 13px"><span style="font-weight: 500">Wordmark (B)</span><span style="color: #5c5c5c">Navbar, OG-bilde, dokumenter og print. Geist 600, -0.02em; strekene erstatter første k og topper ascender-høyden.</span></div>
+    <div style="display: grid; grid-template-columns: 150px 1fr; gap: 16px; font-size: 13px"><span style="font-weight: 500">Monogram (C)</span><span style="color: #5c5c5c">Favicon, app-ikon, sosiale avatarer. Mønsteret forenkles trinnvis: fem striper → tre → to ved 16 px.</span></div>
+    <div style="display: grid; grid-template-columns: 150px 1fr; gap: 16px; font-size: 13px"><span style="font-weight: 500">Farge</span><span style="color: #5c5c5c">Alltid én farge (currentColor). Aldri gradient, aldri ramme rundt.</span></div>
+  </section>
+
+</div>
+</x-dc>
+</body>
+</html>

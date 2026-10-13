@@ -39,7 +39,16 @@ export const mainPageMeta: Metadata = {
   },
 
   icons: {
-    icon: [{ rel: "icon", url: "/favicon.ico" }],
-    apple: [{ rel: "apple", url: "/apple-touch-icon.png" }],
+    icon: [
+      { url: "/favicon.ico", type: "image/x-icon", sizes: "16x16 32x32" },
+      {
+        url: "/android-chrome-192x192.png",
+        type: "image/png",
+        sizes: "192x192",
+      },
+    ],
+    apple: [
+      { url: "/apple-touch-icon.png", type: "image/png", sizes: "180x180" },
+    ],
   },
 };

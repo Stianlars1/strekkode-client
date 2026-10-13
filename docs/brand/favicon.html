@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="nb">
+  <head>
+    <meta charset="utf-8" />
+    <title>Strekkode – ikonoriginal</title>
+    <style>
+      @font-face {
+        font-family: Geist;
+        src: url("../../node_modules/geist/dist/fonts/geist-sans/Geist-Bold.woff2")
+          format("woff2");
+        font-weight: 700;
+      }
+
+      body {
+        margin: 0;
+        background: #ffffff;
+      }
+
+      #icon {
+        width: 192px;
+        height: 192px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+      }
+
+      /* Monogrammet fra Logo.dc.html, skalert fra 110 til 168 px. */
+      #monogram {
+        font-family: Geist;
+        font-size: 110px;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        line-height: 1;
+        background: repeating-linear-gradient(
+          90deg,
+          #171717 0 6px,
+          transparent 6px 9px,
+          #171717 9px 11.5px,
+          transparent 11.5px 16px,
+          #171717 16px 23px,
+          transparent 23px 26.5px
+        );
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        transform: scale(calc(168 / 110));
+      }
+    </style>
+  </head>
+  <body>
+    <div id="icon"><div id="monogram">S</div></div>
+  </body>
+</html>
