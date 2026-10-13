@@ -34,11 +34,31 @@
   gap: 0.25rem;
   text-align: right;
 }
-.footer a:hover {
+.footer__links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.25rem 1rem;
+}
+.footer__consent-status {
+  display: block;
+  max-width: 22rem;
+  margin-top: 0.25rem;
+}
+.footer button {
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+.footer a:hover,
+.footer button:hover {
   text-decoration: underline;
   text-underline-offset: 3px;
 }
-.footer a:focus-visible {
+.footer a:focus-visible,
+.footer button:focus-visible {
   outline: 2px solid hsl(var(--ring));
   outline-offset: 4px;
   border-radius: 4px;
@@ -54,6 +74,9 @@
   }
   .footer__details {
     text-align: left;
+  }
+  .footer__links {
+    justify-content: flex-start;
   }
 }
 

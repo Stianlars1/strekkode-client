@@ -39,12 +39,35 @@
     text-align: right;
   }
 
-  a:hover {
+  &__links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 0.25rem 1rem;
+  }
+
+  &__consent-status {
+    display: block;
+    max-width: 22rem;
+    margin-top: 0.25rem;
+  }
+
+  button {
+    border: 0;
+    background: none;
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+  }
+
+  a:hover,
+  button:hover {
     text-decoration: underline;
     text-underline-offset: 3px;
   }
 
-  a:focus-visible {
+  a:focus-visible,
+  button:focus-visible {
     outline: 2px solid hsl(var(--ring));
     outline-offset: 4px;
     border-radius: 4px;
@@ -62,6 +85,10 @@
 
     &__details {
       text-align: left;
+    }
+
+    &__links {
+      justify-content: flex-start;
     }
   }
 }

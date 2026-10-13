@@ -1,5 +1,4 @@
 "use client";
-import { createBarcode, updateBarcodeDownloadedCount } from "@/utils/supabase/crud";
 import dynamic from "next/dynamic";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { FiCheck, FiCopy } from "react-icons/fi";
@@ -114,15 +113,8 @@ export const BarcodeContainer = () => {
     setRenderFailed(false);
   }, [previewValue, formatId]);
 
-  const registerDownload = () => {
-    // Fire-and-forget stats - never in the way of the download itself.
-    void createBarcode(validation.renderValue).catch(() => {});
-    void updateBarcodeDownloadedCount(validation.renderValue).catch(() => {});
-  };
-
   const handleDownload = async (kind: "png" | "svg") => {
     if (!canDownload) return;
-    registerDownload();
     await downloadBarcode(validation.renderValue, barcodeOptions, kind, scale, {
       transparent: wantTransparent,
       noText: wantNoText,
@@ -169,7 +161,6 @@ export const BarcodeContainer = () => {
 
   const handleCopy = async () => {
     if (!canDownload) return;
-    registerDownload();
     const ok = await copyPngToClipboard(
       validation.renderValue,
       barcodeOptions,

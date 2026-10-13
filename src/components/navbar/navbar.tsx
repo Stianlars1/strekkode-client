@@ -17,7 +17,7 @@ export const Navbar = () => {
         </Link>
         <ul>
           <li>
-            <a className="navbar__contact" href="#kontakt">
+            <a className="navbar__contact" href="/#kontakt">
               Kontakt
             </a>
           </li>

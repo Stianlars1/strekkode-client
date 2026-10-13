@@ -1,5 +1,7 @@
 import { CompanyLogo } from "@/components/company-logo/company-logo";
 import { COMPANY, CONTACT_HREF } from "@/utils/company";
+import { PrivacyPreferences } from "@/features/ads/privacy-preferences";
+import Link from "next/link";
 import "./css/footer.css";
 
 export const Footer = () => (
@@ -14,6 +16,10 @@ export const Footer = () => (
       </a>
       <div className="footer__details">
         <a href={CONTACT_HREF}>Kontakt {COMPANY.name}</a>
+        <div className="footer__links">
+          <Link href="/personvern">Personvern</Link>
+          <PrivacyPreferences />
+        </div>
         <p>© 2024–{new Date().getFullYear()} {COMPANY.name}</p>
       </div>
     </div>

@@ -2,7 +2,7 @@ import { BASE_URL } from "@/utils/constants";
 import { MetadataRoute } from "next";
 
 // Bump manually on real content changes so lastmod stays trustworthy.
-const LAST_CONTENT_CHANGE = "2026-08-27";
+const LAST_CONTENT_CHANGE = "2026-10-13";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   return [
@@ -11,6 +11,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: LAST_CONTENT_CHANGE,
       priority: 1,
       changeFrequency: "monthly",
+    },
+    {
+      url: `${BASE_URL}/personvern`,
+      lastModified: LAST_CONTENT_CHANGE,
+      priority: 0.3,
+      changeFrequency: "yearly",
     },
   ];
 }

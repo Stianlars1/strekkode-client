@@ -1,0 +1,17 @@
+.slot {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 2rem;
+}
+
+.label {
+  color: hsl(var(--muted-foreground));
+  font-size: 0.75rem;
+}
+
+.slot:has(ins[data-ad-status="unfilled"]) {
+  display: none;
+}
