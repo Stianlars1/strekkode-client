@@ -63,6 +63,14 @@ export default function PrivacyPage() {
           de oppgir.
         </p>
         <p>
+          Googles skript lastes for å gjøre samtykkevalgene tilgjengelige, med
+          annonseforespørsler satt på pause. Google opplyser at dette ikke setter
+          nye annonseinformasjonskapsler. Eksisterende informasjonskapsler på
+          Googles domener kan bli lest, men opplysningene brukes ikke til
+          annonsevisning eller måling mens forespørslene er satt på pause. Se
+          <a href="https://support.google.com/adsense/answer/7670312"> Googles beskrivelse av pausing av annonseforespørsler</a>.
+        </p>
+        <p>
           Vi ber bare om en annonse når samtykkeløsningen bekrefter at du har
           tillatt annonselagring og Google som annonseleverandør. Du kan si nei
           og fortsatt bruke hele generatoren. Mangler samtykke, eller er

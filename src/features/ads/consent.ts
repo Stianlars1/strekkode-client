@@ -29,6 +29,6 @@ declare global {
       callback: (data: ConsentData, success: boolean) => void,
       parameter?: number
     ) => void;
-    adsbygoogle?: Record<string, unknown>[];
+    adsbygoogle?: Record<string, unknown>[] & { pauseAdRequests?: number };
   }
 }

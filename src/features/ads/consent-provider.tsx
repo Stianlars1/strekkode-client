@@ -1,6 +1,7 @@
 "use client";
 
 import Script from "next/script";
+import { usePathname } from "next/navigation";
 import {
   createContext,
   ReactNode,
@@ -9,7 +10,7 @@ import {
   useEffect,
   useState,
 } from "react";
-import { ADSENSE_PUBLISHER, permitsAds } from "./consent";
+import { ADSENSE_CLIENT, permitsAds } from "./consent";
 
 const ConsentContext = createContext({
   canShowAds: false,
@@ -20,6 +21,8 @@ export const useAdConsent = () => useContext(ConsentContext);
 
 export const ConsentProvider = ({ children }: { children: ReactNode }) => {
   const [consented, setConsented] = useState(false);
+  const [scriptReady, setScriptReady] = useState(false);
+  const isGeneratorPage = usePathname() === "/";
 
   useEffect(() => {
     let disposed = false;
@@ -32,7 +35,9 @@ export const ConsentProvider = ({ children }: { children: ReactNode }) => {
         window.__tcfapi?.("addEventListener", 2, (data, success) => {
           if (disposed) return;
           listenerId = data?.listenerId;
-          setConsented(Boolean(data) && permitsAds(data, success));
+          const granted = Boolean(data) && permitsAds(data, success);
+          if (!granted) (window.adsbygoogle ??= []).pauseAdRequests = 1;
+          setConsented(granted);
         });
       },
     });
@@ -45,8 +50,14 @@ export const ConsentProvider = ({ children }: { children: ReactNode }) => {
     };
   }, []);
 
+  useEffect(() => {
+    (window.adsbygoogle ??= []).pauseAdRequests =
+      consented && isGeneratorPage ? 0 : 1;
+  }, [consented, isGeneratorPage]);
+
   const openPreferences = useCallback(() => {
     if (!window.googlefc?.showRevocationMessage) return false;
+    (window.adsbygoogle ??= []).pauseAdRequests = 1;
     setConsented(false);
     window.googlefc.callbackQueue.push({
       CONSENT_API_READY: () => window.googlefc?.showRevocationMessage?.(),
@@ -56,21 +67,20 @@ export const ConsentProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <ConsentContext.Provider
-      value={{ canShowAds: consented, openPreferences }}
+      value={{
+        canShowAds: consented && scriptReady && isGeneratorPage,
+        openPreferences,
+      }}
     >
       {children}
-      <iframe
-        name="googlefcPresent"
-        title="Samtykkeløsning"
-        aria-hidden="true"
-        tabIndex={-1}
-        style={{ display: "none", width: 0, height: 0, border: 0 }}
-      />
       <Script
-        id="google-consent"
+        id="google-adsense"
         async
-        src={`https://fundingchoicesmessages.google.com/i/${ADSENSE_PUBLISHER}?ers=1`}
+        src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_CLIENT}`}
+        crossOrigin="anonymous"
         strategy="afterInteractive"
+        onReady={() => setScriptReady(true)}
+        onError={() => setScriptReady(false)}
       />
     </ConsentContext.Provider>
   );

@@ -14,10 +14,12 @@ Oppsett kontrollert 13. oktober 2026. Google avgjør godkjenning av nettstedet.
 
 ## Innlasting
 
-`ConsentProvider` laster Googles separate Privacy & Messaging-tagg.
-AdSense-taggen lastes først av `AdSlot` når TCF-meldingen bekrefter et ferdig
-samtykke med formål 1 (lagring/tilgang på enhet) og Google Advertising Products
-(leverandør 755). Google håndterer øvrige TCF-formål og annonsepartnere.
+Rotlayouten setter `adsbygoogle.pauseAdRequests = 1` før Google-skriptet lastes.
+`ConsentProvider` laster AdSense-taggen, som også leverer den publiserte
+Privacy & Messaging-dialogen. Forespørsler gjenopptas bare på generatorsiden når
+TCF-meldingen bekrefter et ferdig samtykke med formål 1 (lagring/tilgang på enhet)
+og Google Advertising Products (leverandør 755). Google håndterer øvrige
+TCF-formål og annonsepartnere. Personvernsiden har alltid forespørsler på pause.
 
 Ukjent, manglende, avvist eller utilgjengelig samtykke gir ingen annonseforespørsel.
 Dette gjelder også besøk der Googles CMP ikke gir oss et TCF-samtykke. En slik
@@ -40,8 +42,9 @@ database eller historiske data er endret eller slettet som del av dette oppsette
 
 Kjør `npm run build`. Kontroller i nettleseren at:
 
-1. Uten samtykke og etter avvisning lastes ikke `adsbygoogle.js`, og det sendes
-   ingen forespørsel til `/pagead/ads`.
+1. Uten samtykke og etter avvisning sendes ingen forespørsel til `/pagead/ads`.
+   `pauseAdRequests` settes til 1; etter at Google har lastet, er feltet en setter
+   uten getter og kan derfor ikke brukes som en lesbar statusverdi.
 2. Etter samtykke finnes maksimalt én `ins.strekkode_banner` under generatoren.
 3. «Endre samtykke» åpner Googles dialog og tar bort annonseplassen.
 4. Generering, PNG/SVG-nedlasting og kopiering virker uten at verdien sendes til
@@ -53,6 +56,7 @@ annonseenheten. Ikke klikk på egne annonser under kontrollen.
 ## Kilder
 
 - [Google Privacy & Messaging API](https://developers.google.com/funding-choices/fc-api-docs)
+- [Googles pause-API for annonseforespørsler](https://support.google.com/adsense/answer/7670312)
 - [Googles TCF-integrasjon og leverandør 755](https://support.google.com/adsense/answer/9999955)
 - [Tillatt tilpasning av responsive annonseenheter](https://support.google.com/adsense/answer/9183363)
 - [Datatilsynets informasjon om samtykke](https://www.datatilsynet.no/personvern-pa-ulike-omrader/internett-og-apper/cookies/)
