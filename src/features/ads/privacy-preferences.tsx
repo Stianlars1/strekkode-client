@@ -4,18 +4,21 @@ import { useState } from "react";
 import { useAdConsent } from "./consent-provider";
 
 export const PrivacyPreferences = () => {
-  const { openPreferences } = useAdConsent();
-  const [unavailable, setUnavailable] = useState(false);
+  const { canShowAds, openPreferences } = useAdConsent();
+  const [requested, setRequested] = useState(false);
 
   return (
     <span>
-      <button type="button" onClick={() => setUnavailable(!openPreferences())}>
+      <button type="button" onClick={() => {
+        openPreferences();
+        setRequested(true);
+      }}>
         Endre samtykke
       </button>
-      {unavailable && (
+      {requested && !canShowAds && (
         <span className="footer__consent-status" role="status">
-          Samtykkevalgene er ikke tilgjengelige akkurat nå. Ingen annonser lastes
-          uten et gyldig samtykke.
+          Annonser er satt på pause. Hvis samtykkevinduet ikke åpnes, kan du
+          fortsette å bruke generatoren uten annonser.
         </span>
       )}
     </span>

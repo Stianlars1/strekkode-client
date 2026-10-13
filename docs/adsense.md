@@ -53,6 +53,20 @@ Kjør `npm run build`. Kontroller i nettleseren at:
 En synlig annonse kan først bekreftes når Google har godkjent nettstedet og fyller
 annonseenheten. Ikke klikk på egne annonser under kontrollen.
 
+## Status ved produksjonskontroll 13. oktober 2026
+
+AdSense viser samtykkemeldingen som publisert. Nettstedet venter på Googles
+gjennomgang. Google CMP laster (CMP-ID 300, `cmpStatus: loaded`), men leverte
+ingen synlig dialog eller ferdig TCF-valg i Chrome eller Codex-nettleseren,
+heller ikke med Googles dokumenterte forhåndsvisningsparametere. Riktig
+utgiver-ID, toppvindu og referrer-header er kontrollert. Årsaken til manglende
+dialog er ikke fastslått; godkjenning er ikke bevist som årsak.
+
+Produksjon sendte ingen `/pagead/ads`-forespørsler. Valg, avvisning og endring av
+samtykke gjennom den faktiske Google-dialogen må kontrolleres når Google leverer
+den. Annonser forblir av uten et gyldig TCF-valg. Knappen gir en forklaring hvis
+dialogen uteblir.
+
 ## Kilder
 
 - [Google Privacy & Messaging API](https://developers.google.com/funding-choices/fc-api-docs)

@@ -56,9 +56,9 @@ export const ConsentProvider = ({ children }: { children: ReactNode }) => {
   }, [consented, isGeneratorPage]);
 
   const openPreferences = useCallback(() => {
-    if (!window.googlefc?.showRevocationMessage) return false;
     (window.adsbygoogle ??= []).pauseAdRequests = 1;
     setConsented(false);
+    if (!window.googlefc?.showRevocationMessage) return false;
     window.googlefc.callbackQueue.push({
       CONSENT_API_READY: () => window.googlefc?.showRevocationMessage?.(),
     });
