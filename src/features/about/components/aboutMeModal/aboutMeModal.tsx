@@ -1,5 +1,6 @@
 import { Modal } from "@/components/modal/modal";
-import Image from "next/image";
+import { CompanyLogo } from "@/components/company-logo/company-logo";
+import { COMPANY } from "@/utils/company";
 import { FiArrowUpRight } from "react-icons/fi";
 import "./css/aboutMeModal.css";
 
@@ -10,9 +11,9 @@ const LINKS = [
     desc: "Søstertjenesten for QR-koder",
   },
   {
-    href: "https://stianlarsen.com",
-    label: "stianlarsen.com",
-    desc: "Flere prosjekter og kontakt",
+    href: COMPANY.url,
+    label: COMPANY.name,
+    desc: "Personlig hjelp, tilpasninger og kontakt",
   },
   {
     href: "https://github.com/stianlars1",
@@ -38,30 +39,23 @@ export const AboutMeModal = ({
     >
       <article className="about-modal">
         <header className="about-modal__header">
-          <Image
-            src="/stian-bitmoji.png"
-            width={44}
-            height={44}
-            alt=""
-            aria-hidden="true"
-          />
+          <CompanyLogo size={44} />
           <div>
             <h2>Om strek-kode.no</h2>
-            <p className="about-modal__byline">Laget av Stian Larsen</p>
+            <p className="about-modal__byline">Et produkt fra {COMPANY.name}</p>
           </div>
         </header>
 
         <p>
-          Hei! Jeg er en fullstack-utvikler som liker å bygge verktøy som
-          forenkler hverdagen. Strek-kode.no lager strekkoder rett i
-          nettleseren - enkelt, raskt og helt gratis. Ingen registrering, ingen
-          vannmerker, ingen begrensninger.
+          Strek-kode.no eies og drives av {COMPANY.name}, og er utviklet av
+          Stian Larsen. Her kan du lage strekkoder rett i nettleseren, gratis og
+          uten registrering eller vannmerker.
         </p>
 
         <p>
-          Verktøyet brukes av både bedrifter og privatpersoner, til alt fra
-          lagermerking til varer som skal ut i butikk. Målet er det samme som
-          alltid: teknologi som er tilgjengelig for alle, uten kostnad.
+          Trenger du personlig hjelp med strekkoder, etiketter eller en
+          tilpasset løsning? Ta kontakt med {COMPANY.name} for å avklare behov
+          og pris. Selve strekkodegeneratoren er fortsatt gratis.
         </p>
 
         <ul className="about-modal__links">

@@ -18,10 +18,30 @@
     > ul {
       display: flex;
       align-items: center;
+      gap: 1rem;
 
       > li {
         list-style-type: none;
       }
+    }
+  }
+
+  &__contact {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    font-size: 0.875rem;
+    font-weight: 500;
+
+    &:hover {
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
+
+    &:focus-visible {
+      outline: 2px solid hsl(var(--ring));
+      outline-offset: 4px;
+      border-radius: 4px;
     }
   }
 }

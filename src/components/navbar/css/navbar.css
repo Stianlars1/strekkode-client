@@ -18,9 +18,26 @@
 .navbar__inner > ul {
   display: flex;
   align-items: center;
+  gap: 1rem;
 }
 .navbar__inner > ul > li {
   list-style-type: none;
+}
+.navbar__contact {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+.navbar__contact:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.navbar__contact:focus-visible {
+  outline: 2px solid hsl(var(--ring));
+  outline-offset: 4px;
+  border-radius: 4px;
 }
 
 /* Wordmark: "stre" + three bars replacing the first k + "kode".

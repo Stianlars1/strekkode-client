@@ -1,4 +1,5 @@
 import { Header } from "@/components/header/header";
+import { Contact } from "@/features/contact/contact";
 import { Guide } from "@/features/guide/guide";
 import { Hero } from "@/features/hero/hero";
 import "./_css/page.css";
@@ -8,6 +9,7 @@ export default function Home() {
     <div className="whole-page-wrapper">
       <Header />
       <Hero />
+      <Contact />
       <Guide />
     </div>
   );
