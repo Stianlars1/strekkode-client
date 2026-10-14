@@ -17,6 +17,11 @@ export const Navbar = () => {
         </Link>
         <ul>
           <li>
+            <Link href="/veiledning" className="navbar__contact">
+              Veiledning
+            </Link>
+          </li>
+          <li>
             <a className="navbar__contact" href="/#kontakt">
               Kontakt
             </a>

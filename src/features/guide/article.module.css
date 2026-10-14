@@ -1,0 +1,73 @@
+.page {
+  width: min(100% - 2rem, 48rem);
+  margin: 0 auto;
+  padding: 2.5rem 0 4rem;
+  line-height: 1.7;
+}
+
+.page h1 {
+  margin: 1.5rem 0 0.5rem;
+  font-size: clamp(1.9rem, 5vw, 2.75rem);
+  line-height: 1.15;
+  letter-spacing: -0.035em;
+}
+
+.page h2 {
+  margin: 0 0 0.5rem;
+  font-size: 1.25rem;
+  line-height: 1.3;
+  letter-spacing: -0.015em;
+}
+
+.page section {
+  margin-top: 2.25rem;
+}
+
+.page p,
+.page li {
+  color: hsl(var(--muted-foreground));
+}
+
+.page p {
+  margin: 0.75rem 0 0;
+}
+
+.page ol,
+.page ul {
+  padding-left: 1.4rem;
+  margin: 0.75rem 0 0;
+}
+
+.page li + li {
+  margin-top: 0.4rem;
+}
+
+.page a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.page a:focus-visible {
+  outline: 2px solid hsl(var(--ring));
+  outline-offset: 4px;
+}
+
+.updated {
+  font-size: 0.875rem;
+}
+
+.intro {
+  margin-top: 1.5rem !important;
+  font-size: 1.125rem;
+}
+
+.sources {
+  padding-top: 1.5rem;
+  border-top: 1px solid hsl(var(--border));
+}
+
+@media (max-width: 600px) {
+  .page {
+    padding-top: 1.5rem;
+  }
+}
