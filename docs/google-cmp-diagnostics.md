@@ -37,7 +37,7 @@ Nettstedskode og egenskaper skal hentes fra den aktiverte portalen før integras
 
 14. oktober bekreftet InMobi også «Sign up email resent successfully» etter ny utsending til firmapostkassen. E-postlevering er ikke bekreftet. Outlooks firmapostkasse og tomme søppelpost ble kontrollert. Domenets MX er `mx.domeneshop.no`. InMobis Google-innlogging for firmakontoen ender gjentatte ganger på `/auth/openid/return` med feilen `Required request parameter 'id_token' ... is not present`. Det er ikke fastslått hvorfor tokenet mangler.
 
-Eieren godkjente en teknisk henvendelse til InMobi. Supportskjemaet ble sendt under «Choice CMP → Account Management → Registration and login issues». Portalen svarte «Inquiry Submitted Successfully» 14. oktober ca. kl. 10:03 CEST. Ingen saks-ID ble vist; svar ventes til den registrerte firmapostkassen. Meldingen ber InMobi undersøke aktiveringsstatus, e-postleveringslogger og Google-innloggingsfeilen. Utkastet ligger lokalt i `docs/inmobi-support-request.txt` og er ikke lagt i Git.
+Eieren godkjente en teknisk henvendelse til InMobi. Supportskjemaet ble sendt under «Choice CMP → Account Management → Registration and login issues». Portalen svarte «Inquiry Submitted Successfully» 14. oktober ca. kl. 10:03 CEST. Kvitterings-e-posten kom til firmapostkassen fra `supply-ops@inmobi.com` kl. 10:04 og oppga **sak 02015093**. Aktiverings-e-posten er fortsatt ikke funnet. Meldingen ber InMobi undersøke aktiveringsstatus, e-postleveringslogger og Google-innloggingsfeilen. Utkastet ligger lokalt i `docs/inmobi-support-request.txt` og er ikke lagt i Git.
 
 - https://support.google.com/adsense/answer/13554116
 - https://choice.inmobi.com/login
